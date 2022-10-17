@@ -1,0 +1,3 @@
+C:/The_Library's_Development/Projects/Learning/Learning OpenGL/vendor/glm/glm/bin/CMakeFiles/INSTALL.dir
+C:/The_Library's_Development/Projects/Learning/Learning OpenGL/vendor/glm/glm/bin/CMakeFiles/ALL_BUILD.dir
+C:/The_Library's_Development/Projects/Learning/Learning OpenGL/vendor/glm/glm/bin/CMakeFiles/ZERO_CHECK.dir

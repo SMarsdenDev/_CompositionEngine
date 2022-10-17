@@ -1,0 +1,10 @@
+^C:\THE_LIBRARY'S_DEVELOPMENT\PROJECTS\LEARNING\COMPOSITIONENGINE\VENDOR\GLFW\TESTS\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/The_Library's_Development/Projects/Learning/CompositionEngine/vendor/glfw" "-BC:/The_Library's_Development/Projects/Learning/CompositionEngine/vendor/glfw" --check-stamp-file "C:/The_Library's_Development/Projects/Learning/CompositionEngine/vendor/glfw/tests/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
