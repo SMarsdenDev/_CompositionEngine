@@ -14,17 +14,14 @@ namespace _CompositionEngine
   	delete m_Window;
   }
   
-  void Application::Run()
-  {
-  	
-  }
-  
   void Application::OnTick(float dt)
   {
   }
   
   void Application::OnRender()
   {
+    //m_Window->StartFrame();
+    m_Window->EndFrame();
   }
   
   void Application::OnEvent()

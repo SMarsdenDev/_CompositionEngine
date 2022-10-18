@@ -152,6 +152,7 @@
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\EntryPoint.cpp" />
     <ClCompile Include="src\glad.c" />
+    <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\Engine.h" />
+    <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\Log.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\Window.h" />

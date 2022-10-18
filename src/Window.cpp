@@ -23,6 +23,27 @@ namespace _CompositionEngine
   Window::~Window()
   {
   }
+
+  bool Window::IsKeyPressed(int key) 
+  {
+    return glfwGetKey(m_Window, key) == GLFW_PRESS;
+  }
+
+  bool Window::IsKeyReleased(int key) 
+  {
+    return glfwGetKey(m_Window, key) == GLFW_RELEASE;
+  }
+
+  bool Window::IsKeyRepeated(int key) 
+  {
+    return glfwGetKey(m_Window, key) == GLFW_REPEAT;
+  }
+
+  void Window::EndFrame()
+  {
+    glfwPollEvents();
+    glfwSwapBuffers(m_Window);
+  }
   
   void Window::InitializeCallbacks()
   {

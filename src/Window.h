@@ -10,6 +10,12 @@ namespace _CompositionEngine
 
 		inline GLFWwindow* GetWindowPtr() const { return m_Window; }
 
+		bool IsKeyPressed(int key);
+		bool IsKeyReleased(int key);
+		bool IsKeyRepeated(int key);
+
+		void EndFrame();
+
 	private:
 		void InitializeCallbacks();
 

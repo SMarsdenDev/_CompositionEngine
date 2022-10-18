@@ -9,11 +9,12 @@ namespace _CompositionEngine
 		Application();
 		~Application();
 
-		void Run();
 
 		void OnTick(float dt);
 		void OnRender();
 		void OnEvent(/*Event& e*/);
+
+		inline Window* GetWindow() const { return m_Window; }
 
 	private:
 		bool m_IsRunning;
