@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Log.h"
 #include "Engine.h"
 
