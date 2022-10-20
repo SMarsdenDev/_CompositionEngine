@@ -1,7 +1,7 @@
 #include "Window.h"
-#include "Log.h"
-#include "Events/KeyEvent.h"
-#include "Events/MouseEvent.h"
+#include "../Log.h"
+#include "../Events/KeyEvent.h"
+#include "../Events/MouseEvent.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
@@ -28,7 +28,12 @@ namespace _CompositionEngine
   {
   }
 
-  bool Window::IsKeyPressed(int key) 
+  void Window::SetClearColor(glm::vec3 col)
+  {
+    glClearColor(col.r, col.g, col.b, 1.0f);
+  }
+
+  bool Window::IsKeyPressed(int key)
   {
     return glfwGetKey(m_Window, key) == GLFW_PRESS;
   }
@@ -41,6 +46,11 @@ namespace _CompositionEngine
   bool Window::IsKeyRepeated(int key) 
   {
     return glfwGetKey(m_Window, key) == GLFW_REPEAT;
+  }
+
+  void Window::StartFrame()
+  {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   }
 
   void Window::EndFrame()

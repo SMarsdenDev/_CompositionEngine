@@ -10,6 +10,8 @@ namespace _CompositionEngine
 	class MouseScrolledEvent;
 	class ApplicationRenderEvent;
 	class ApplicationTickEvent;
+	class Object;
+
 	class Application
 	{
 	public:
@@ -30,5 +32,6 @@ namespace _CompositionEngine
 	private:
 		bool m_IsRunning;
 		Window* m_Window;
+		std::vector<Object*> m_Objects;
 	};
 }

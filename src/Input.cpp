@@ -1,6 +1,6 @@
 #include "Input.h"
-#include "Application.h"
-#include "Window.h"
+#include "Rendering/Application.h"
+#include "Rendering/Window.h"
 #include "Log.h"
 
 namespace _CompositionEngine

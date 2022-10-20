@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
-#include "Events/Event.h"
+#include "../Events/Event.h"
+#include "glm/glm.hpp"
 struct GLFWwindow;
 
 namespace _CompositionEngine
@@ -14,10 +15,13 @@ namespace _CompositionEngine
 
 		inline GLFWwindow* GetWindowPtr() const { return m_Window; }
 
+		void SetClearColor(glm::vec3 col);
+
 		bool IsKeyPressed(int key);
 		bool IsKeyReleased(int key);
 		bool IsKeyRepeated(int key);
 
+		void StartFrame();
 		void EndFrame();
 
 	private:

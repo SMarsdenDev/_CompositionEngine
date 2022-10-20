@@ -1,5 +1,5 @@
 #include "Engine.h"
-#include "Application.h"
+#include "Rendering/Application.h"
 #include "Log.h"
 #include "Input.h"
 #include "Events/Event.h"
@@ -8,7 +8,9 @@
 
 namespace _CompositionEngine
 {
+//! Used to bind an Engine member function to a specific object, allowing it to be send as a pointer
 #define BIND_EVENT_FN(x) std::bind(&Engine::x, this, std::placeholders::_1)
+
 	Engine* Engine::s_Instance = nullptr;
 
 	Engine::Engine()
