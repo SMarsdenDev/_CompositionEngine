@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Window.h"
 #include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
 #include <functional>
 
 namespace _CompositionEngine
@@ -33,9 +34,22 @@ namespace _CompositionEngine
     EventDispatcher dispatcher(e);
     dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(OnKey));
     dispatcher.Dispatch<KeyReleasedEvent>(BIND_EVENT_FN(OnKey));
+    dispatcher.Dispatch<MouseButtonPressedEvent>(BIND_EVENT_FN(OnMouseButton));
+    dispatcher.Dispatch<MouseButtonReleasedEvent>(BIND_EVENT_FN(OnMouseButton));
+    dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN(OnMouseScrolled));
   }
 
   bool Application::OnKey(KeyEvent& e)
+  {
+    LOG_INFO(e.ToString());
+    return true;
+  }
+  bool Application::OnMouseButton(MouseButtonEvent& e)
+  {
+    LOG_INFO(e.ToString());
+    return true;
+  }
+  bool Application::OnMouseScrolled(MouseScrolledEvent& e)
   {
     LOG_INFO(e.ToString());
     return true;

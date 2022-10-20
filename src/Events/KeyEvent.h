@@ -11,6 +11,7 @@ namespace _CompositionEngine
 		KeyEvent(int key) : m_Key(key) {};
 
 		inline int GetKey() const { return m_Key; }
+		EVENT_CLASS_CATEGORY(EventCategoryInput | EventCategoryKeyboard)
 	private:
 		int m_Key;
 	};
@@ -22,7 +23,6 @@ namespace _CompositionEngine
 			KeyEvent(key), m_RepeatCount(repeatCount) {};
 
 		EVENT_CLASS_TYPE(KeyPressed)
-		EVENT_CLASS_CATEGORY(EventCategoryInput | EventCategoryKeyboard)
 
 		virtual std::string ToString() const override
 		{
@@ -41,7 +41,6 @@ namespace _CompositionEngine
 		KeyReleasedEvent(int key) : KeyEvent(key) {};
 
 		EVENT_CLASS_TYPE(KeyReleased)
-		EVENT_CLASS_CATEGORY(EventCategoryInput | EventCategoryKeyboard)
 
 		virtual std::string ToString() const override
 		{

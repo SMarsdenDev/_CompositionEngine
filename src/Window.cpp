@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "Log.h"
 #include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
@@ -63,7 +64,37 @@ namespace _CompositionEngine
           KeyReleasedEvent event(key);
           winData.m_Fn(event);
         }
-
+        else if (action == GLFW_REPEAT)
+        {
+          KeyPressedEvent event(key, 1);
+          winData.m_Fn(event);
+        }
+      });
+    glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
+      {
+        WindowData& winData = *(WindowData*)glfwGetWindowUserPointer(window);
+        if (action == GLFW_PRESS)
+        {
+          MouseButtonPressedEvent event(button, 0);
+          winData.m_Fn(event);
+        }
+        if (action == GLFW_RELEASE)
+        {
+          MouseButtonReleasedEvent event(button);
+          winData.m_Fn(event);
+        }
+      });
+    glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos)
+      {
+        WindowData& winData = *(WindowData*)glfwGetWindowUserPointer(window);
+        MouseMovedEvent event(xpos, ypos);
+        winData.m_Fn(event);
+      });
+    glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xoffset, double yoffset)
+      {
+        WindowData& winData = *(WindowData*)glfwGetWindowUserPointer(window);
+        MouseScrolledEvent event(xoffset, yoffset);
+        winData.m_Fn(event);
       });
   }
 }

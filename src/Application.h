@@ -6,6 +6,8 @@ namespace _CompositionEngine
 	class Window;
 	class Event;
 	class KeyEvent;
+	class MouseButtonEvent;
+	class MouseScrolledEvent;
 	class Application
 	{
 	public:
@@ -21,6 +23,8 @@ namespace _CompositionEngine
 
 	private:
 		bool OnKey(KeyEvent& e);
+		bool OnMouseButton(MouseButtonEvent& e);
+		bool OnMouseScrolled(MouseScrolledEvent& e);
 	private:
 		bool m_IsRunning;
 		Window* m_Window;
