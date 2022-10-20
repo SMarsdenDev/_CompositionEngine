@@ -58,6 +58,11 @@ namespace _CompositionEngine
           KeyPressedEvent event(key, 0);
           winData.m_Fn(event);
         }
+        else if (action == GLFW_RELEASE)
+        {
+          KeyReleasedEvent event(key);
+          winData.m_Fn(event);
+        }
 
       });
   }

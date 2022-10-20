@@ -5,7 +5,7 @@ namespace _CompositionEngine
 {
 	class Window;
 	class Event;
-	class KeyPressedEvent;
+	class KeyEvent;
 	class Application
 	{
 	public:
@@ -20,7 +20,7 @@ namespace _CompositionEngine
 		inline Window* GetWindow() const { return m_Window; }
 
 	private:
-		bool OnKeyPressed(KeyPressedEvent& e);
+		bool OnKey(KeyEvent& e);
 	private:
 		bool m_IsRunning;
 		Window* m_Window;

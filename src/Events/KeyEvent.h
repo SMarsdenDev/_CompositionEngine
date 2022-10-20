@@ -27,11 +27,28 @@ namespace _CompositionEngine
 		virtual std::string ToString() const override
 		{
 			std::stringstream str;
-			str << "KeyPressedEvent: " << GetKey() << "(" << m_RepeatCount << " repeats)";
+			str << "KeyPressedEvent: " << (char)GetKey() << "(" << m_RepeatCount << " repeats)";
 			return str.str();
 		}
 
 	private:
 		unsigned m_RepeatCount;
+	};
+
+	class KeyReleasedEvent : public KeyEvent
+	{
+	public:
+		KeyReleasedEvent(int key) : KeyEvent(key) {};
+
+		EVENT_CLASS_TYPE(KeyReleased)
+		EVENT_CLASS_CATEGORY(EventCategoryInput | EventCategoryKeyboard)
+
+		virtual std::string ToString() const override
+		{
+			std::stringstream str;
+			str << "KeyReleasedEvent: " << (char)GetKey();
+			return str.str();
+		}
+	private:
 	};
 }
