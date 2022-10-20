@@ -8,6 +8,8 @@ namespace _CompositionEngine
 	class KeyEvent;
 	class MouseButtonEvent;
 	class MouseScrolledEvent;
+	class ApplicationRenderEvent;
+	class ApplicationTickEvent;
 	class Application
 	{
 	public:
@@ -15,8 +17,8 @@ namespace _CompositionEngine
 		~Application();
 
 
-		void OnTick(float dt);
-		void OnRender();
+		bool OnTick(ApplicationTickEvent& e);
+		bool OnRender(ApplicationRenderEvent& e);
 		void OnEvent(Event& e);
 
 		inline Window* GetWindow() const { return m_Window; }

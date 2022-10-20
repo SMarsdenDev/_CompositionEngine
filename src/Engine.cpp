@@ -3,6 +3,7 @@
 #include "Log.h"
 #include "Input.h"
 #include "Events/Event.h"
+#include "Events/ApplicationEvent.h"
 #include "GLFW/glfw3.h" //!< glfwGetTime
 
 namespace _CompositionEngine
@@ -39,13 +40,14 @@ namespace _CompositionEngine
 		{
 			if (Input::IsKeyPressed(GLFW_KEY_ESCAPE))
 				m_IsRunning = false;
-
 			double startFrameTime = glfwGetTime();
-			//! m_Systems[i]->OnTick(float dt);
-			//! m_Systems[i]->OnRender();
-			m_Application->OnTick(m_FrameTime);
-			m_Application->OnRender();
 
+			ApplicationTickEvent appTick(m_FrameTime);
+			ApplicationRenderEvent appRender;
+
+			BroadcastEvent(appTick);
+			BroadcastEvent(appRender);
+			
 			double endFrameTime = glfwGetTime();
 			m_FrameTime = (float)(endFrameTime - startFrameTime);
 		} while (m_IsRunning);

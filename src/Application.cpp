@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "Events/KeyEvent.h"
 #include "Events/MouseEvent.h"
+#include "Events/ApplicationEvent.h"
 #include <functional>
 
 namespace _CompositionEngine
@@ -19,14 +20,18 @@ namespace _CompositionEngine
   	delete m_Window;
   }
   
-  void Application::OnTick(float dt)
+  bool Application::OnTick(ApplicationTickEvent& e)
   {
+    //LOG_INFO(e.ToString());
+    return true;
   }
   
-  void Application::OnRender()
+  bool Application::OnRender(ApplicationRenderEvent& e)
   {
     //m_Window->StartFrame();
+    //LOG_INFO(e.ToString());
     m_Window->EndFrame();
+    return true;
   }
   
   void Application::OnEvent(Event& e)
@@ -37,6 +42,8 @@ namespace _CompositionEngine
     dispatcher.Dispatch<MouseButtonPressedEvent>(BIND_EVENT_FN(OnMouseButton));
     dispatcher.Dispatch<MouseButtonReleasedEvent>(BIND_EVENT_FN(OnMouseButton));
     dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN(OnMouseScrolled));
+    dispatcher.Dispatch<ApplicationTickEvent>(BIND_EVENT_FN(OnTick));
+    dispatcher.Dispatch<ApplicationRenderEvent>(BIND_EVENT_FN(OnRender));
   }
 
   bool Application::OnKey(KeyEvent& e)

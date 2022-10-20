@@ -11,7 +11,7 @@ run :
 
 push :
 	git push -u origin master
-	git log
+	git log --reverse
 
 stage :
 	-rmdir /s /q .vs
