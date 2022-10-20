@@ -2,7 +2,7 @@
 namespace _CompositionEngine
 {
   class Application;
-	
+	class Event;
 	class Engine
 	{
 	public:
@@ -10,6 +10,8 @@ namespace _CompositionEngine
 		~Engine();
 
 		void Run();
+
+		void BroadcastEvent(Event& e);
 
 	private:
 		static Engine* s_Instance;

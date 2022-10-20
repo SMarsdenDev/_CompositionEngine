@@ -1,11 +1,15 @@
 #include "Application.h"
 #include "Window.h"
+#include "Events/KeyEvent.h"
+#include <functional>
 
 namespace _CompositionEngine
 {
-  Application::Application()
+#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+
+  Application::Application(EventCallbackFn fn)
   	: m_IsRunning(true), 
-  	  m_Window(new Window("TEST WINDOW", 600, 600))
+  	  m_Window(new Window("TEST WINDOW", 600, 600, fn))
   {
   }
   
@@ -24,8 +28,16 @@ namespace _CompositionEngine
     m_Window->EndFrame();
   }
   
-  void Application::OnEvent()
+  void Application::OnEvent(Event& e)
   {
+    EventDispatcher dispatcher(e);
+    dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(OnKeyPressed));
+  }
+
+  bool Application::OnKeyPressed(KeyPressedEvent& e)
+  {
+    LOG_INFO(e.ToString());
+    return true;
   }
 }
 

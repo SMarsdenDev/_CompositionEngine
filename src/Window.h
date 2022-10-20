@@ -1,11 +1,15 @@
-
+#pragma once
+#include <functional>
+#include "Events/Event.h"
 struct GLFWwindow;
+
 namespace _CompositionEngine
 {
+	using EventCallbackFn = std::function<void(Event&)>;
 	class Window
 	{
 	public:
-		Window(const char* name, int width, int height);
+		Window(const char* name, int width, int height, EventCallbackFn fn);
 		~Window();
 
 		inline GLFWwindow* GetWindowPtr() const { return m_Window; }
@@ -19,6 +23,13 @@ namespace _CompositionEngine
 	private:
 		void InitializeCallbacks();
 
+		struct WindowData
+		{
+			int m_Width, m_Height;
+			const char* m_Name;
+			EventCallbackFn m_Fn;
+		};
 		GLFWwindow* m_Window;
+		WindowData m_Data;
 	};
 }

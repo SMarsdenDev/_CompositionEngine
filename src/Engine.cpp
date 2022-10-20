@@ -2,14 +2,16 @@
 #include "Application.h"
 #include "Log.h"
 #include "Input.h"
+#include "Events/Event.h"
 #include "GLFW/glfw3.h" //!< glfwGetTime
 
 namespace _CompositionEngine
 {
+#define BIND_EVENT_FN(x) std::bind(&Engine::x, this, std::placeholders::_1)
 	Engine* Engine::s_Instance = nullptr;
 
 	Engine::Engine()
-		: m_Application(new Application()), m_FrameTime(0.016667f), m_IsRunning(true)
+		: m_Application(new Application(BIND_EVENT_FN(BroadcastEvent))), m_FrameTime(0.016667f), m_IsRunning(true)
 	{
 		if (s_Instance == nullptr)
 		{
@@ -47,6 +49,10 @@ namespace _CompositionEngine
 			double endFrameTime = glfwGetTime();
 			m_FrameTime = (float)(endFrameTime - startFrameTime);
 		} while (m_IsRunning);
+	}
+	void Engine::BroadcastEvent(Event& e)
+	{
+		m_Application->OnEvent(e);
 	}
 }
 

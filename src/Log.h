@@ -1,3 +1,4 @@
+#pragma once
 #include "spdlog/spdlog.h"
 
 #define LOG_INFO(...) spdlog::info(__VA_ARGS__)

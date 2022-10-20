@@ -7,7 +7,7 @@ namespace _CompositionEngine
   Log::Log()
   {
     spdlog::set_pattern("[%H:%M:%S:%e] [%^%=7l%$] %v");
-    //spdlog::info("Welcome to spdlog!");
+    spdlog::info("Welcome to spdlog!");
     //spdlog::error("Some error message with arg: {}", 1);
     //spdlog::warn("Easy padding in numbers like {:08d}", 12);
     //spdlog::critical("Support for int: {0:d};  hex: {0:x};  oct: {0:o}; bin: {0:b}", 42);

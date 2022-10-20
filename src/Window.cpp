@@ -1,14 +1,16 @@
 #include "Window.h"
 #include "Log.h"
+#include "Events/KeyEvent.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 namespace _CompositionEngine
 {  
-  Window::Window(const char* name, int width, int height)
+  Window::Window(const char* name, int width, int height, EventCallbackFn fn)
+    : m_Data({ width, height, name, fn })
   {
   	glfwInit();
-  	m_Window = glfwCreateWindow(width, height, name, nullptr, nullptr);
+    m_Window = glfwCreateWindow(width, height, name, nullptr, nullptr);
   	glfwMakeContextCurrent(GetWindowPtr());
   	int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
   	if (!status)
@@ -17,6 +19,7 @@ namespace _CompositionEngine
   		LOG_INFO("Make sure your context is made current and glfwInit has been called");
   		assert(false);
   	}
+    glfwSetWindowUserPointer(m_Window, &m_Data);
   	InitializeCallbacks();
   }
   
@@ -47,6 +50,16 @@ namespace _CompositionEngine
   
   void Window::InitializeCallbacks()
   {
+    glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int options)
+      {
+        WindowData& winData = *(WindowData*)glfwGetWindowUserPointer(window);
+        if (action == GLFW_PRESS)
+        {
+          KeyPressedEvent event(key, 0);
+          winData.m_Fn(event);
+        }
+
+      });
   }
 }
 
