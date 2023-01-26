@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Objects\Components\Mesh\ArrayBuffer.cpp" />
     <ClCompile Include="src\Objects\Object.cpp" />
     <ClCompile Include="src\Rendering\Application.cpp" />
     <ClCompile Include="src\Engine.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="src\Rendering\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Objects\Components\Mesh\ArrayBuffer.h" />
     <ClInclude Include="src\Objects\Object.h" />
     <ClInclude Include="src\Rendering\Application.h" />
     <ClInclude Include="src\Core.h" />

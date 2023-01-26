@@ -46,7 +46,8 @@ namespace _CompositionEngine
   void Application::OnEvent(Event& e)
   {
     EventDispatcher dispatcher(e);
-    if (e.GetCategoryFlags() & EventCategoryKeyboard)
+    if (e.GetCategoryFlags() & EventCategoryKeyboard ||
+        e.GetCategoryFlags() & EventCategoryMouse)
       LOG_INFO(e.ToString());
     dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(OnKey));
     dispatcher.Dispatch<KeyReleasedEvent>(BIND_EVENT_FN(OnKey));
