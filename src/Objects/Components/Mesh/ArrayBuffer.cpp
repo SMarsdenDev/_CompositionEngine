@@ -32,14 +32,19 @@ namespace _CompositionEngine
 
 	ArrayBuffer::ArrayBuffer(GLenum type)
 	{
-		if (type == GL_ARRAY_BUFFER || type == GL_ELEMENT_ARRAY_BUFFER)
+		if (type == GL_ARRAY_BUFFER)
+		{
 			GL_CALL(glGenBuffers(1, &m_ID));
-		if (type == GL_VERTEX_ARRAY)
+		}
+		else if (type == GL_VERTEX_ARRAY)
+		{
 			GL_CALL(glGenVertexArrays(1, &m_ID));
+		}
 	}
 	VertexArray::VertexArray()
 		: ArrayBuffer(GL_VERTEX_ARRAY)
 	{
+		Bind();
 	}
 	void VertexArray::Bind()
 	{
@@ -49,6 +54,8 @@ namespace _CompositionEngine
 		: ArrayBuffer(GL_ARRAY_BUFFER)
 	{
 		Bind();
+		for (unsigned i = 0; i < size / sizeof(unsigned); ++i)
+			m_Vertices.push_back(verts[i]);
 		GL_CALL(glBufferData(GL_ARRAY_BUFFER, size, verts, GL_STATIC_DRAW));
 	}
 	void VertexBuffer::AssignLayout(VertexBufferLayout& layout)
@@ -58,6 +65,7 @@ namespace _CompositionEngine
 		{
 			GL_CALL(glVertexAttribPointer(i, layout.m_Offsets[i] / GetSizeFromType(layout.m_Types[i]), 
 				GetGLTypeFromEnumType(layout.m_Types[i]), GL_FALSE, layout.m_Offsets[i], NULL));
+			GL_CALL(glEnableVertexAttribArray(i));
 		}
 	}
 	void VertexBuffer::Bind()
@@ -69,13 +77,15 @@ namespace _CompositionEngine
 		m_Types.push_back(type);
 		m_Offsets.push_back(GetSizeFromType(type) * count);
 	}
-	IndexBuffer::IndexBuffer(unsigned* indices, unsigned count)
+	IndexBuffer::IndexBuffer(unsigned* indices, unsigned size)
 		: ArrayBuffer(GL_ELEMENT_ARRAY_BUFFER)
 	{
-		GL_CALL(glGenBuffers(GL_ELEMENT_ARRAY_BUFFER, &m_ID));
+		GL_CALL(glGenBuffers(1, &m_ID));
+		LOG_INFO(m_ID);
 		Bind();
-
-		GL_CALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned), indices, GL_STATIC_DRAW));
+		for (unsigned i = 0; i < size / sizeof(unsigned); ++i)
+			m_Indices.push_back(indices[i]);
+		GL_CALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW));
 	}
 	void IndexBuffer::Bind()
 	{

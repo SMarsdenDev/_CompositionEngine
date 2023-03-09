@@ -26,7 +26,7 @@ namespace _CompositionEngine
 
 	void Material::OnRender(ApplicationRenderEvent& re)
 	{
-
+      m_Shader.Bind();
 	}
 
 	void Material::OnEvent(Event& e)

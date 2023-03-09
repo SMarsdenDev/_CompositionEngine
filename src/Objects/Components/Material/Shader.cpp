@@ -1,3 +1,5 @@
+#pragma once
+#include "../../../stdafx.h"
 #include <string>
 #include "Shader.h"
 #include "ShaderSource.h"
@@ -9,4 +11,9 @@ namespace _CompositionEngine
 	{
       m_ID = m_Source.Compile();
 	}
+
+    void Shader::Bind()
+    {
+    	GL_CALL(glUseProgram(m_ID));
+    }
 }

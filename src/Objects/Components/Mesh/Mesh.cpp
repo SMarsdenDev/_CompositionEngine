@@ -3,9 +3,12 @@
 
 namespace _CompositionEngine
 {
-	Mesh::Mesh(float* verts, unsigned vertexcount, unsigned* indices, unsigned indexcount)
-		: m_VAO(), m_VBO(verts, vertexcount), m_IBO(indices, indexcount)
+	Mesh::Mesh(float* verts, unsigned vertexsize, unsigned* indices, unsigned indexsize)
+		: m_VAO(), m_VBO(verts, vertexsize), m_IBO(indices, indexsize)
 	{
+		VertexBufferLayout layout;
+		layout.AddAttribute(3, FLOAT);
+		m_VBO.AssignLayout(layout);
 	}
 	void Mesh::OnUpdate(ApplicationTickEvent& te)
 	{
@@ -13,8 +16,6 @@ namespace _CompositionEngine
 	void Mesh::OnRender(ApplicationRenderEvent& re)
 	{
 		m_VAO.Bind();
-		m_VBO.Bind();
-		m_IBO.Bind();
 
 		GL_CALL(glDrawElements(GL_TRIANGLES, m_IBO.Size(), GL_UNSIGNED_INT, (void*)0));
 	}

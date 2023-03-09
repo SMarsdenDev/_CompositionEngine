@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "../Objects/Object.h"
 #include "../Objects/Components/Material/Material.h"
+#include "../Objects/Components/Mesh/Mesh.h"
 #include "../Objects/Components/Material/ShaderSource.h"
 #include "../Events/KeyEvent.h"
 #include "../Events/MouseEvent.h"
@@ -20,10 +21,28 @@ namespace _CompositionEngine
   {
     m_Window->SetClearColor(glm::vec3(0.5f, 0.05f, 0.35f));
 
+    //! Create Material component
     std::string filepath = "data/Shaders/test.shader"; 
     Material* mat = new Material(filepath);
+
+    //! Create Mesh component
+    float triangleVertices[9] = 
+    {
+      -0.5f, -0.5f, 0.0f,
+      0.5f, -0.5f, 0.0f,
+      0.0f, 0.5f, 0.0f
+    };
+    unsigned triangleIndices[3] = 
+    {
+      0, 1, 2
+    };
+    Mesh* mesh = new Mesh(triangleVertices, sizeof(triangleVertices),
+                          triangleIndices, sizeof(triangleIndices));
+
+    //! Create test object
     Object* obj = new Object();
     obj->AddComponent(mat);
+    obj->AddComponent(mesh);
     m_Objects.push_back(obj);
   }
   
