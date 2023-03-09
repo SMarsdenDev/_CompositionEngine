@@ -122,6 +122,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)vendor\assimp\include;$(SolutionDir)vendor\glad\include;$(SolutionDir)vendor\glad\src;$(SolutionDir)vendor\glfw\include;$(SolutionDir)vendor\glfw\src;$(SolutionDir)vendor\glm;$(SolutionDir)vendor\imgui;$(SolutionDir)vendor\spdlog\include;$(SolutionDir)vendor\spdlog\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderOutputFile>$(SolutionDir)src/stdafx.h</PrecompiledHeaderOutputFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,6 +149,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Objects\Components\Material\ShaderSource.cpp" />
+    <ClCompile Include="
+      src\Objects\Components\Material\Shader.cpp" />
+    <ClCompile Include="
+      src\Objects\Components\Material\Material.cpp" />
     <ClCompile Include="src\Objects\Components\Mesh\ArrayBuffer.cpp" />
     <ClCompile Include="src\Objects\Components\Mesh\Mesh.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
@@ -163,6 +169,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Objects\Components\Component.h" />
+    <ClInclude Include="src\Objects\Components\Material\Material.h" />
+    <ClInclude Include="src\Objects\Components\Material\Shader.h" />
+    <ClInclude Include="src\Objects\Components\Material\ShaderSource.h" />
     <ClInclude Include="src\Objects\Components\Mesh\ArrayBuffer.h" />
     <ClInclude Include="src\Objects\Components\Mesh\Mesh.h" />
     <ClInclude Include="src\Objects\Object.h" />

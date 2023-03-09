@@ -2,6 +2,8 @@
 #include "Window.h"
 #include "Renderer.h"
 #include "../Objects/Object.h"
+#include "../Objects/Components/Material/Material.h"
+#include "../Objects/Components/Material/ShaderSource.h"
 #include "../Events/KeyEvent.h"
 #include "../Events/MouseEvent.h"
 #include "../Events/ApplicationEvent.h"
@@ -17,18 +19,26 @@ namespace _CompositionEngine
   	  m_Window(new Window("TEST WINDOW", 600, 600, fn))
   {
     m_Window->SetClearColor(glm::vec3(0.5f, 0.05f, 0.35f));
+
+    std::string filepath = "data/Shaders/test.shader"; 
+    Material* mat = new Material(filepath);
+    Object* obj = new Object();
+    obj->AddComponent(mat);
+    m_Objects.push_back(obj);
   }
   
   Application::~Application()
   {
   	delete m_Window;
+    for(Object* obj : m_Objects)
+      delete obj;
   }
   
   bool Application::OnTick(ApplicationTickEvent& e)
   {
     //LOG_INFO(e.ToString());
     for(Object* obj : m_Objects)
-      obj->OnUpdate(e.GetFrameTime());
+      obj->OnUpdate(e);
     return true;
   }
   
@@ -38,7 +48,10 @@ namespace _CompositionEngine
     m_Window->StartFrame();
     //! Take data from ApplicationRenderEvent to determine details about object rendering (i.e. normals, depth, post-processing, etc.)
      for(Object* obj : m_Objects)
+     {
+       obj->OnRender(e);
        Renderer::Draw(*obj, e);
+     }
     m_Window->EndFrame();
     return true;
   }

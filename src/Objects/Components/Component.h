@@ -7,8 +7,8 @@ namespace _CompositionEngine
                           virtual inline ComponentType GetType() const { return ComponentType::##x; }
 	enum ComponentType
 	{
-		Mesh,
-		Material
+		MeshComponent,
+		MaterialComponent
 	};
 
 	class ApplicationRenderEvent;

@@ -9,14 +9,14 @@ namespace _CompositionEngine
 	class Mesh : public Component
 	{
 	public:
-		Mesh(float* vertx, unsigned count, unsigned* indices, unsigned indexcount);
+		Mesh(float* vertices, unsigned count, unsigned* indices, unsigned indexcount);
 
 		virtual void OnUpdate(ApplicationTickEvent& te);
 		virtual void OnRender(ApplicationRenderEvent& re);
 		virtual void OnEvent(Event& e);
 
 
-		COMPONENT_TYPE(Mesh)
+		COMPONENT_TYPE(MeshComponent)
 	private:
 		VertexArray m_VAO;
 		VertexBuffer m_VBO;
