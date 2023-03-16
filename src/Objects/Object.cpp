@@ -25,3 +25,9 @@ void _CompositionEngine::Object::OnRender(ApplicationRenderEvent& e)
 	for(Component* comp : m_Components)
 		comp->OnRender(e);
 }
+
+void _CompositionEngine::Object::OnEvent(Event& e)
+{
+	for(Component* comp : m_Components)
+		comp->OnEvent(e);
+}

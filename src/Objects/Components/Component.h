@@ -8,7 +8,8 @@ namespace _CompositionEngine
 	enum ComponentType
 	{
 		MeshComponent,
-		MaterialComponent
+		MaterialComponent,
+		CameraControllerComponent,
 	};
 
 	class ApplicationRenderEvent;

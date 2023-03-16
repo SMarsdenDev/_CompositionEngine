@@ -16,4 +16,19 @@ namespace _CompositionEngine
     {
     	GL_CALL(glUseProgram(m_ID));
     }
+
+	int Shader::GetUniformLocation(std::string uniformName)
+	{
+	  const std::vector<UniformData>* uData = m_Source.GetUniformData();
+
+	  for(const UniformData uniform : *uData)
+	  {
+	  	if(uniform.m_Name == uniformName)
+	  		return uniform.m_Location;
+	  }
+	  LOG_WARN("Uniform Name:");
+	  LOG_WARN(uniformName);
+	  LOG_WARN("not found!");
+	  return 0;
+	}
 }

@@ -17,6 +17,9 @@ namespace _CompositionEngine
 
 		void SetClearColor(glm::vec3 col);
 
+        inline int GetWidth() const { return m_Data.m_Width; }
+        inline int GetHeight() const { return m_Data.m_Height; }
+
 		bool IsKeyPressed(int key);
 		bool IsKeyReleased(int key);
 		bool IsKeyRepeated(int key);

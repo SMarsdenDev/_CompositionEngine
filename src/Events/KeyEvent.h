@@ -22,6 +22,8 @@ namespace _CompositionEngine
 		KeyPressedEvent(int key, unsigned repeatCount) : 
 			KeyEvent(key), m_RepeatCount(repeatCount) {};
 
+		inline int GetKey() const { return KeyEvent::GetKey(); }
+
 		EVENT_CLASS_TYPE(KeyPressed)
 
 		virtual std::string ToString() const override
@@ -39,6 +41,8 @@ namespace _CompositionEngine
 	{
 	public:
 		KeyReleasedEvent(int key) : KeyEvent(key) {};
+
+		inline int GetKey() const { return KeyEvent::GetKey(); }
 
 		EVENT_CLASS_TYPE(KeyReleased)
 

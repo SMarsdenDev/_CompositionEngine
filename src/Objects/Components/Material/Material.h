@@ -1,9 +1,11 @@
 #pragma once
 #include <map>
 #include <string>
+#include <typeinfo>
 #include "Shader.h"
 #include "../Component.h"
 #include "glm/glm.hpp"
+#include "../../../Log.h"
 
 namespace _CompositionEngine
 {
@@ -11,9 +13,14 @@ namespace _CompositionEngine
 	{
 	public:
 		Material(std::string& filepath);
+		~Material();
 
-		template <typename T>
-		void SetValue(const char*, T);
+		void SetValue(std::string name, glm::vec3 value);
+		void SetValue(std::string name, glm::vec4 value);
+		void SetValue(std::string name, glm::mat3 value);
+		void SetValue(std::string name, glm::mat4 value);
+		void SetValue(std::string name, int value);
+		void SetValue(std::string name, float value);
 
 		void UploadUniforms();
 
@@ -24,10 +31,15 @@ namespace _CompositionEngine
 		COMPONENT_TYPE(MaterialComponent)
 
 	private:
-		std::map<const char*, float> m_FloatData;
-		std::map<const char*, int> m_IntData;
-		std::map<const char*, glm::vec3> m_Vec3Data;
+		Shader* m_Shader = nullptr;
+		UniformData* GetUniformData(std::string name);
+		const std::vector<UniformData>* m_UniformData = nullptr;
+		std::map<std::string, std::pair<int, glm::vec3>> m_Vec3Data;
+		std::map<std::string, std::pair<int, glm::vec4>> m_Vec4Data;
+		std::map<std::string, std::pair<int, glm::mat3>> m_Mat3Data;
+		std::map<std::string, std::pair<int, glm::mat4>> m_Mat4Data;
+		std::map<std::string, std::pair<int,     float>> m_FloatData;
+		std::map<std::string, std::pair<int,       int>> m_IntData;
 
-		Shader m_Shader;
 	};
 }

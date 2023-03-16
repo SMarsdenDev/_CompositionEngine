@@ -1,10 +1,13 @@
 #include "Application.h"
 #include "Window.h"
 #include "Renderer.h"
+#include "glm/glm.hpp"
 #include "../Objects/Object.h"
 #include "../Objects/Components/Material/Material.h"
 #include "../Objects/Components/Mesh/Mesh.h"
 #include "../Objects/Components/Material/ShaderSource.h"
+#include "../Objects/Components/CameraController/CameraController.h"
+#include "../Objects/Camera.h"
 #include "../Events/KeyEvent.h"
 #include "../Events/MouseEvent.h"
 #include "../Events/ApplicationEvent.h"
@@ -21,9 +24,17 @@ namespace _CompositionEngine
   {
     m_Window->SetClearColor(glm::vec3(0.5f, 0.05f, 0.35f));
 
+    //! Create test Camera
+    Camera cam(glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f,0.f,-1.f),
+               glm::vec3(0.f,1.f,0.f), 90.f, 
+               (float)(m_Window->GetWidth() / m_Window->GetHeight()), 
+               0.1f, 1000.f);
+
     //! Create Material component
     std::string filepath = "data/Shaders/test.shader"; 
     Material* mat = new Material(filepath);
+    glm::vec3 triColor { 1.0f, 1.0f, 0.35f };
+    mat->SetValue(std::string("uVertColor"), triColor);
 
     //! Create Mesh component
     float triangleVertices[9] = 
@@ -36,13 +47,18 @@ namespace _CompositionEngine
     {
       0, 1, 2
     };
+
     Mesh* mesh = new Mesh(triangleVertices, sizeof(triangleVertices),
                           triangleIndices, sizeof(triangleIndices));
+
+    //! Create Camera Controller Component
+    CameraController* camControl = new CameraController(&cam);
 
     //! Create test object
     Object* obj = new Object();
     obj->AddComponent(mat);
     obj->AddComponent(mesh);
+    obj->AddComponent(camControl);
     m_Objects.push_back(obj);
   }
   
@@ -68,8 +84,8 @@ namespace _CompositionEngine
     //! Take data from ApplicationRenderEvent to determine details about object rendering (i.e. normals, depth, post-processing, etc.)
      for(Object* obj : m_Objects)
      {
-       obj->OnRender(e);
        Renderer::Draw(*obj, e);
+       obj->OnRender(e);
      }
     m_Window->EndFrame();
     return true;
@@ -88,6 +104,12 @@ namespace _CompositionEngine
     dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN(OnMouseScrolled));
     dispatcher.Dispatch<ApplicationTickEvent>(BIND_EVENT_FN(OnTick));
     dispatcher.Dispatch<ApplicationRenderEvent>(BIND_EVENT_FN(OnRender));
+
+    if(e.GetIsHandled() != true)
+    {
+      for(Object* obj : m_Objects)
+        obj->OnEvent(e);
+    }
   }
 
   bool Application::OnKey(KeyEvent& e)

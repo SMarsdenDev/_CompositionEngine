@@ -5,6 +5,7 @@ namespace _CompositionEngine
 {
 	class ApplicationRenderEvent;
 	class ApplicationTickEvent;
+	class Event;
 	class Object
 	{
 	public:
@@ -15,6 +16,7 @@ namespace _CompositionEngine
 
 	  virtual void OnUpdate(ApplicationTickEvent& e);
 	  virtual void OnRender(ApplicationRenderEvent& e);
+	  virtual void OnEvent(Event& e);
 	private:
 		std::vector<Component*> m_Components;
 	};

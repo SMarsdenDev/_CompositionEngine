@@ -156,8 +156,10 @@
       src\Objects\Components\Material\Material.cpp" />
     <ClCompile Include="src\Objects\Components\Mesh\ArrayBuffer.cpp" />
     <ClCompile Include="src\Objects\Components\Mesh\Mesh.cpp" />
+    <ClCompile Include="src\Objects\Components\CameraController\CameraController.cpp"/>
     <ClCompile Include="src\stdafx.cpp" />
     <ClCompile Include="src\Objects\Object.cpp" />
+    <ClCompile Include="src\Objects\Camera.cpp" />
     <ClCompile Include="src\Rendering\Application.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\EntryPoint.cpp" />
@@ -174,7 +176,9 @@
     <ClInclude Include="src\Objects\Components\Material\ShaderSource.h" />
     <ClInclude Include="src\Objects\Components\Mesh\ArrayBuffer.h" />
     <ClInclude Include="src\Objects\Components\Mesh\Mesh.h" />
+    <ClInclude Include="src\Objects\Components\CameraController\CameraController.h"/>
     <ClInclude Include="src\Objects\Object.h" />
+    <ClInclude Include="src\Objects\Camera.h" />
     <ClInclude Include="src\Rendering\Application.h" />
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\Engine.h" />

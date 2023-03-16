@@ -11,7 +11,8 @@ namespace _CompositionEngine
 		void Bind();
 
 		inline unsigned ID() const { return m_ID; }
-		//inline unsigned GetUniformLocation(const char* uniformName);
+		inline const std::vector<UniformData>* GetUniformData() const { return m_Source.GetUniformData(); }
+		int GetUniformLocation(std::string uniformName);
 
 	private:
 		ShaderSource m_Source;
