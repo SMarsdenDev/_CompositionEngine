@@ -25,7 +25,7 @@ namespace _CompositionEngine
     m_Window->SetClearColor(glm::vec3(0.5f, 0.05f, 0.35f));
 
     //! Create test Camera
-    Camera cam(glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f,0.f,-1.f),
+    m_CurrentCamera = new Camera(glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f,0.f,-1.f),
                glm::vec3(0.f,1.f,0.f), 90.f, 
                (float)(m_Window->GetWidth() / m_Window->GetHeight()), 
                0.1f, 1000.f);
@@ -50,9 +50,11 @@ namespace _CompositionEngine
 
     Mesh* mesh = new Mesh(triangleVertices, sizeof(triangleVertices),
                           triangleIndices, sizeof(triangleIndices));
+    mesh->SetPosition(glm::vec3(0.f,0.25f,0.f));
+    mesh->SetScale(glm::vec3(0.25f,0.25f,0.25f));
 
     //! Create Camera Controller Component
-    CameraController* camControl = new CameraController(&cam);
+    CameraController* camControl = new CameraController(m_CurrentCamera);
 
     //! Create test object
     Object* obj = new Object();
@@ -65,15 +67,20 @@ namespace _CompositionEngine
   Application::~Application()
   {
   	delete m_Window;
+    delete m_CurrentCamera;
     for(Object* obj : m_Objects)
+    {
       delete obj;
+    }
   }
   
   bool Application::OnTick(ApplicationTickEvent& e)
   {
     //LOG_INFO(e.ToString());
     for(Object* obj : m_Objects)
+    {
       obj->OnUpdate(e);
+    }
     return true;
   }
   
@@ -84,8 +91,7 @@ namespace _CompositionEngine
     //! Take data from ApplicationRenderEvent to determine details about object rendering (i.e. normals, depth, post-processing, etc.)
      for(Object* obj : m_Objects)
      {
-       Renderer::Draw(*obj, e);
-       obj->OnRender(e);
+       Renderer::Draw(*obj, *m_CurrentCamera, e);
      }
     m_Window->EndFrame();
     return true;
@@ -114,15 +120,15 @@ namespace _CompositionEngine
 
   bool Application::OnKey(KeyEvent& e)
   {
-    return true;
+    return false;
   }
   bool Application::OnMouseButton(MouseButtonEvent& e)
   {
-    return true;
+    return false;
   }
   bool Application::OnMouseScrolled(MouseScrolledEvent& e)
   {
-    return true;
+    return false;
   }
 }
 

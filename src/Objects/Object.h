@@ -12,11 +12,13 @@ namespace _CompositionEngine
 	  Object();
 	  ~Object();
 
-	  inline void AddComponent(Component* c) { m_Components.push_back(c); }
+	  inline void AddComponent(Component* c) { c->SetParent(this); m_Components.push_back(c); }
 
 	  virtual void OnUpdate(ApplicationTickEvent& e);
 	  virtual void OnRender(ApplicationRenderEvent& e);
 	  virtual void OnEvent(Event& e);
+
+	  Component* GetComponent(const char* name) const;
 	private:
 		std::vector<Component*> m_Components;
 	};

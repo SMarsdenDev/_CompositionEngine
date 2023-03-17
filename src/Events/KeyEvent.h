@@ -23,6 +23,7 @@ namespace _CompositionEngine
 			KeyEvent(key), m_RepeatCount(repeatCount) {};
 
 		inline int GetKey() const { return KeyEvent::GetKey(); }
+		inline unsigned GetRepeatCount() const { return m_RepeatCount; }
 
 		EVENT_CLASS_TYPE(KeyPressed)
 

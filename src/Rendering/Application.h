@@ -11,7 +11,7 @@ namespace _CompositionEngine
 	class ApplicationRenderEvent;
 	class ApplicationTickEvent;
 	class Object;
-
+    class Camera;
 	class Application
 	{
 	public:
@@ -33,5 +33,6 @@ namespace _CompositionEngine
 		bool m_IsRunning;
 		Window* m_Window;
 		std::vector<Object*> m_Objects;
+		Camera* m_CurrentCamera = nullptr;
 	};
 }

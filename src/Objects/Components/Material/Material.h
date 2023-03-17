@@ -9,6 +9,7 @@
 
 namespace _CompositionEngine
 {
+	class Object;
 	class Material : public Component
 	{
 	public:

@@ -15,6 +15,7 @@ namespace _CompositionEngine
 	class ApplicationRenderEvent;
 	class ApplicationTickEvent;
 	class Event;
+	class Object;
 	class Component
 	{
 	public:
@@ -25,7 +26,11 @@ namespace _CompositionEngine
 		virtual void OnRender(ApplicationRenderEvent& re) = 0;
 		virtual void OnEvent(Event& e) = 0;
 
+		inline Object* GetParent() const { return m_Parent; }
+		inline void SetParent(Object* parent) { if(m_Parent != parent) { m_Parent = parent; }}
+
 	private:
+        Object* m_Parent = nullptr;
 		//! Specific OnEvent dispatch functions (i.e. OnMouseButtonPressed, OnKeyReleased, etc.)
 	};
 

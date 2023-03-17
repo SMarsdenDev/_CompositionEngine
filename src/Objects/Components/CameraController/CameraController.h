@@ -27,5 +27,7 @@ namespace _CompositionEngine
 		Camera* m_Camera;
 		float m_MoveDirection[3];
 		bool m_InMotion;
+		float m_RotationAxis[3];
+		float m_RotationSpeed;
 	};
 }
