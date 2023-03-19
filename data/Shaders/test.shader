@@ -63,5 +63,6 @@ vec3 CalculateSpecular()
 void main()
 {
     vec3 result = (CalculateAmbient() + CalculateDiffuse() + CalculateSpecular()) * uObjectColor;
-	fragColor = vec4(result, 1.f);
+	//fragColor = vec4(vNormal/2 + 0.5, 1.f);
+	fragColor = vec4(result,1.f);
 }

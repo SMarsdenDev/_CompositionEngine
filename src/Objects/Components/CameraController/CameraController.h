@@ -1,14 +1,29 @@
 #pragma once
 #include "../Component.h"
+#include "../../Camera.h"
+
 
 namespace _CompositionEngine
 {
-	class Camera;
 	class ApplicationRenderEvent;
 	class ApplicationTickEvent;
 	class KeyPressedEvent;
 	class KeyReleasedEvent;
 	class Event;
+
+	typedef void(Camera::*CamMovementFunc)(float);
+
+    enum CameraMovement
+    {
+    	Forward,
+    	Right,
+    	Up,
+
+        Roll,
+        Pitch,
+        Yaw
+    };
+
 	class CameraController : public Component
 	{
 	public:
@@ -25,7 +40,13 @@ namespace _CompositionEngine
         bool OnKeyReleasedEvent(KeyReleasedEvent& ke);
 
 		Camera* m_Camera;
-		float m_MoveDirection[3];
-		bool m_InMotion;
+		float m_CameraSpeed = 0.5f;
+		float m_RotationSpeed = 1.f;
+
+		bool m_IsMoving[6]    = {false, false, false, false, false, false};
+		float m_MoveAmount[6] = {0.f,   0.f,   0.f,   0.f,   0.f,   0.f};
+	    CamMovementFunc m_MoveFunc[6] = {&Camera::MoveForward, &Camera::MoveRight,
+	                                     &Camera::MoveUp, &Camera::Roll,
+	                                     &Camera::Pitch, &Camera::Yaw};
 	};
 }

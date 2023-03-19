@@ -1,6 +1,5 @@
 #pragma once
 #include "CameraController.h"
-#include "../../Camera.h"
 #include "../../../Events/ApplicationEvent.h"
 #include "../../../Events/KeyEvent.h"
 #include "../../../Events/Event.h"
@@ -22,13 +21,13 @@ namespace _CompositionEngine
 
 	void CameraController::OnUpdate(ApplicationTickEvent& te)
 	{
-      if(m_InMotion)
+    for(int i = 0; i < 6; ++i)
+    {
+      if(m_IsMoving[i])
       {
-        glm::vec3 moveDisplace = {m_MoveDirection[0] * te.GetFrameTime(),
-                                 m_MoveDirection[1] * te.GetFrameTime(),
-                                 m_MoveDirection[2] * te.GetFrameTime()};
-      	m_Camera->Eye(m_Camera->Eye() + moveDisplace);
+        (m_Camera->*m_MoveFunc[i])(m_MoveAmount[i] * te.GetFrameTime());
       }
+    }
 	}
 
 	void CameraController::OnRender(ApplicationRenderEvent& re)
@@ -52,111 +51,132 @@ namespace _CompositionEngine
     {
       if(ke.GetKey() == 'W')
       {
-        glm::vec3 lookat = m_Camera->Lookat();
-        m_MoveDirection[0] += lookat.x;
-        m_MoveDirection[1] += lookat.y;
-        m_MoveDirection[2] += lookat.z;
-        m_InMotion = true;
+        m_IsMoving[Forward] = true;
+        m_MoveAmount[Forward] += m_CameraSpeed;
       }
       else if(ke.GetKey() == 'A')
       {
-        glm::vec3 right = m_Camera->Right();
-        m_MoveDirection[0] -= right.x;
-        m_MoveDirection[1] -= right.y;
-        m_MoveDirection[2] -= right.z;
-        m_InMotion = true;
+        m_IsMoving[Right] = true;
+        m_MoveAmount[Right] += -m_CameraSpeed;
       }
       else if(ke.GetKey() == 'S')
       {
-        glm::vec3 back = m_Camera->Back();
-        m_MoveDirection[0] += back.x;
-        m_MoveDirection[1] += back.y;
-        m_MoveDirection[2] += back.z;
-        m_InMotion = true;
+        m_IsMoving[Forward] = true;
+        m_MoveAmount[Forward] += -m_CameraSpeed;
       }
       else if(ke.GetKey() == 'D')
       {
-        glm::vec3 right = m_Camera->Right();
-        m_MoveDirection[0] += right.x;
-        m_MoveDirection[1] += right.y;
-        m_MoveDirection[2] += right.z;
-        m_InMotion = true;
+        m_IsMoving[Right] = true;
+        m_MoveAmount[Right] += m_CameraSpeed;
       }
       else if(ke.GetKey() == 'Q')
       {
-        glm::vec3 up = m_Camera->Up();
-        m_MoveDirection[0] += up.x;
-        m_MoveDirection[1] += up.y;
-        m_MoveDirection[2] += up.z;
-        m_InMotion = true;
+        m_IsMoving[Up] = true;
+        m_MoveAmount[Up] += m_CameraSpeed;
       }
       else if(ke.GetKey() == 'E')
       {
-        glm::vec3 up = m_Camera->Up();
-        m_MoveDirection[0] -= up.x;
-        m_MoveDirection[1] -= up.y;
-        m_MoveDirection[2] -= up.z;
-        m_InMotion = true;
+        m_IsMoving[Up] = true;
+        m_MoveAmount[Up] += -m_CameraSpeed;
       }
-      return m_InMotion;
+      else if(ke.GetKey() == 'I')
+      {
+        m_IsMoving[Pitch] = true;
+        m_MoveAmount[Pitch] += m_RotationSpeed;
+      }
+      else if(ke.GetKey() == 'J')
+      {
+        m_IsMoving[Yaw] = true;
+        m_MoveAmount[Yaw] += m_RotationSpeed;
+      }
+      else if(ke.GetKey() == 'K')
+      {
+        m_IsMoving[Pitch] = true;
+        m_MoveAmount[Pitch] += -m_RotationSpeed;
+      }
+      else if(ke.GetKey() == 'L')
+      {
+        m_IsMoving[Yaw] = true;
+        m_MoveAmount[Yaw] += -m_RotationSpeed;
+      }
+      else if(ke.GetKey() == 'U')
+      {
+        m_IsMoving[Roll] = true;
+        m_MoveAmount[Roll] += -m_RotationSpeed;
+      }
+      else if(ke.GetKey() == 'O')
+      {
+        m_IsMoving[Roll] = true;
+        m_MoveAmount[Roll] += m_RotationSpeed;
+      }
     }
-    return m_InMotion;
+    return true;
 	}
 	bool CameraController::OnKeyReleasedEvent(KeyReleasedEvent& ke)
 	{
     bool handled = false;
-      if(ke.GetKey() == 'W')
+
+if(ke.GetKey() == 'W')
       {
-        glm::vec3 lookat = m_Camera->Lookat();
-        m_MoveDirection[0] -= lookat.x;
-        m_MoveDirection[1] -= lookat.y;
-        m_MoveDirection[2] -= lookat.z;
-        handled = true;
+        m_IsMoving[Forward] = false;
+        m_MoveAmount[Forward] = 0.f;
       }
-      if(ke.GetKey() == 'A')
+      else if(ke.GetKey() == 'A')
       {
-      	glm::vec3 right = m_Camera->Right();
-        m_MoveDirection[0] += right.x;
-        m_MoveDirection[1] += right.y;
-        m_MoveDirection[2] += right.z;
-        handled = true;        
+        m_IsMoving[Right] = false;
+        m_MoveAmount[Right] = 0.f;
       }
-      if(ke.GetKey() == 'S')
+      else if(ke.GetKey() == 'S')
       {
-        glm::vec3 back = m_Camera->Back();
-        m_MoveDirection[0] -= back.x;
-        m_MoveDirection[1] -= back.y;
-        m_MoveDirection[2] -= back.z;
-        handled = true;
+        m_IsMoving[Forward] = false;
+        m_MoveAmount[Forward] = 0.f;
       }
-      if(ke.GetKey() == 'D')
+      else if(ke.GetKey() == 'D')
       {
-        glm::vec3 right = m_Camera->Right();
-        m_MoveDirection[0] -= right.x;
-        m_MoveDirection[1] -= right.y;
-        m_MoveDirection[2] -= right.z;
-        handled = true;
+        m_IsMoving[Right] = false;
+        m_MoveAmount[Right] = 0.f;
       }
-      if(ke.GetKey() == 'Q')
+      else if(ke.GetKey() == 'Q')
       {
-        glm::vec3 up = m_Camera->Up();
-        m_MoveDirection[0] -= up.x;
-        m_MoveDirection[1] -= up.y;
-        m_MoveDirection[2] -= up.z;
-        handled = true;
+        m_IsMoving[Up] = false;
+        m_MoveAmount[Up] = 0.f;
       }
-      if(ke.GetKey() == 'E')
+      else if(ke.GetKey() == 'E')
       {
-        glm::vec3 up = m_Camera->Up();
-        m_MoveDirection[0] += up.x;
-        m_MoveDirection[1] += up.y;
-        m_MoveDirection[2] += up.z;
-        handled = true;
+        m_IsMoving[Up] = false;
+        m_MoveAmount[Up] = 0.f;
       }
-      if(m_MoveDirection[0] == 0.f &&
-      	 m_MoveDirection[1] == 0.f &&
-      	 m_MoveDirection[2] == 0.f)
-      	m_InMotion = false;
-      return handled;
-	}
+      else if(ke.GetKey() == 'I')
+      {
+        m_IsMoving[Pitch] = false;
+        m_MoveAmount[Pitch] = 0.f;
+      }
+      else if(ke.GetKey() == 'J')
+      {
+        m_IsMoving[Yaw] = false;
+        m_MoveAmount[Yaw] = 0.f;
+      }
+      else if(ke.GetKey() == 'K')
+      {
+        m_IsMoving[Pitch] = false;
+        m_MoveAmount[Pitch] = 0.f;
+      }
+      else if(ke.GetKey() == 'L')
+      {
+        m_IsMoving[Yaw] = false;
+        m_MoveAmount[Yaw] = 0.f;
+      }
+      else if(ke.GetKey() == 'U')
+      {
+        m_IsMoving[Roll] = false;
+        m_MoveAmount[Roll] = 0.f;
+      }
+      else if(ke.GetKey() == 'O')
+      {
+        m_IsMoving[Roll] = false;
+        m_MoveAmount[Roll] = 0.f;
+      }
+    
+    return handled;  
+  }
 }

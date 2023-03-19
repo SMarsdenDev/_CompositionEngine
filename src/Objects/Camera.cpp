@@ -1,6 +1,7 @@
 #pragma once
 #include "Camera.h"
 #include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtx/transform.hpp"
 
 namespace _CompositionEngine
 {
@@ -33,7 +34,7 @@ namespace _CompositionEngine
 
   void Camera::OnUpdate(ApplicationTickEvent& e) 
   {
-
+    
   }
 
   void Camera::OnRender(ApplicationRenderEvent& e)
@@ -44,5 +45,47 @@ namespace _CompositionEngine
   void Camera::OnEvent(Event& e)
   {
 
+  }
+
+  void Camera::MoveForward(float distance)
+  {
+    Eye(Eye() + (distance * Lookat()));
+  }
+
+  void Camera::MoveRight(float distance)
+  {
+    Eye(Eye() + (distance * Right()));
+  }
+
+  void Camera::MoveUp(float distance)
+  {
+    Eye(Eye() + (distance * Up()));
+  }
+
+  void Camera::Roll(float degrees)
+  {
+    glm::mat4 rotate = glm::rotate(degrees, Lookat());
+    glm::vec3 upVec = Up();
+    glm::vec3 rVec = Right();
+    Up(glm::vec3(rotate * glm::vec4(upVec.x, upVec.y, upVec.z, 1.f)));
+    Right(glm::vec3(rotate * glm::vec4(rVec.x, rVec.y, rVec.z, 1.f)));
+  }
+
+  void Camera::Pitch(float degrees)
+  {
+    glm::mat4 rotate = glm::rotate(degrees, Right());
+    glm::vec3 upVec = Up();
+    glm::vec3 backVec = Back();
+    Up(glm::vec3(rotate * glm::vec4(upVec.x, upVec.y, upVec.z, 1.f)));
+    Back(glm::vec3(rotate * glm::vec4(backVec.x, backVec.y, backVec.z, 1.f)));
+  }
+
+  void Camera::Yaw(float degrees)
+  {
+    glm::mat4 rotate = glm::rotate(degrees, Up());
+    glm::vec3 backVec = Back();
+    glm::vec3 rVec = Right();
+    Right(glm::vec3(rotate * glm::vec4(rVec.x, rVec.y, rVec.z, 1.f)));
+    Back(glm::vec3(rotate * glm::vec4(backVec.x, backVec.y, backVec.z, 1.f)));
   }
 }

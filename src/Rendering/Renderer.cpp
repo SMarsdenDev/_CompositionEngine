@@ -12,7 +12,8 @@ namespace _CompositionEngine
 	  //! Set Camera UBO
       dynamic_cast<Material*>(obj.GetComponent("MaterialComponent"))->SetValue("uViewMatrix", cam.View());
       dynamic_cast<Material*>(obj.GetComponent("MaterialComponent"))->SetValue("uPerspMatrix", cam.Persp());
-	  //! Tell Shader how to render object (3D, 2D, Depth, Deferred)
+	  dynamic_cast<Material*>(obj.GetComponent("MaterialComponent"))->SetValue("uCameraPosition", cam.Eye());
+      //! Tell Shader how to render object (3D, 2D, Depth, Deferred)
 	  obj.OnRender(event);
 	}
 }

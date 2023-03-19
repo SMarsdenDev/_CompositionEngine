@@ -44,6 +44,15 @@ namespace _CompositionEngine
         inline void Near(float newNear)         { m_Near = newNear; m_PerspDirty = true;     }
         inline void Far(float newFar)           { m_Far = newFar; m_PerspDirty = true;       }
 
+        //! Movement
+        void MoveForward(float distance);
+        void MoveRight(float distance);
+        void MoveUp(float distance);
+
+        void Roll(float degrees);
+        void Pitch(float degrees);
+        void Yaw(float degrees);
+
 	private:
         bool m_ViewDirty = true, m_PerspDirty = true;
 

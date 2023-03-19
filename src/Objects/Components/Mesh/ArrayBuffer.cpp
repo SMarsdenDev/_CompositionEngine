@@ -84,7 +84,6 @@ namespace _CompositionEngine
 		: ArrayBuffer(GL_ELEMENT_ARRAY_BUFFER)
 	{
 		GL_CALL(glGenBuffers(1, &m_ID));
-		LOG_INFO(m_ID);
 		Bind();
 		for (unsigned i = 0; i < size / sizeof(unsigned); ++i)
 			m_Indices.push_back(indices[i]);

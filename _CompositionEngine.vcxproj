@@ -162,8 +162,8 @@
     <ClCompile Include="src\Objects\RotatingCube.cpp" />
     <ClCompile Include="src\Objects\Camera.cpp" />
     <ClCompile Include="src\Rendering\Application.cpp" />
-    <ClCompile Include="src\Rendering\3DRenderTestScene.cpp" />
     <ClCompile Include="src\Rendering\Scene.cpp" />
+    <ClCompile Include="src\Rendering\3DRenderTestScene.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\EntryPoint.cpp" />
     <ClCompile Include="src\glad.c" />
