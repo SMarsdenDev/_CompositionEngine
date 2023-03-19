@@ -22,7 +22,6 @@ namespace _CompositionEngine
 	  std::string buffer(fileSize, '\0');
 
 	  file.read(&buffer[0], fileSize);
-	  //LOG_INFO(buffer);
 
 	  //! Separate source into shader types
 	  std::string vertexSource, fragmentSource;
@@ -98,6 +97,7 @@ namespace _CompositionEngine
       	glGetShaderInfoLog(fragmentID, 512, NULL, infoLog);
       	LOG_ERROR("Fragment Shader Compilation Failed!");
       	LOG_ERROR(infoLog);
+      	abort();
       }
 
       // Shader Program
@@ -112,6 +112,7 @@ namespace _CompositionEngine
       	glGetProgramInfoLog(programID, 512, NULL, infoLog);
       	LOG_ERROR("Shader Program Linking Failed!");
       	LOG_ERROR(infoLog);
+      	abort();
       	return 0;
       }
 

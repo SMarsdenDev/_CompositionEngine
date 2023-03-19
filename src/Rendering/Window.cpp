@@ -20,6 +20,9 @@ namespace _CompositionEngine
   		LOG_INFO("Make sure your context is made current and glfwInit has been called");
   		assert(false);
   	}
+    //! Enable Depth Rendering
+    glEnable(GL_DEPTH_TEST);
+
     glfwSetWindowUserPointer(m_Window, &m_Data);
   	InitializeCallbacks();
   }

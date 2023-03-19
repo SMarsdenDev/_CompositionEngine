@@ -23,20 +23,29 @@ namespace _CompositionEngine
     //! Create Material component
     std::string filepath = "data/Shaders/test.shader"; 
     Material* mat = new Material(filepath);
-    glm::vec3 triColor { 1.0f, 1.0f, 0.35f };
-    mat->SetValue(std::string("uVertColor"), triColor);
+
+    glm::vec3 triColor { 118.f / 255.f, 87.f / 255.f, 130.f / 255.f };
+
+    glm::vec3 lightColor { 1.f, 1.f, 1.f };
+    glm::vec3 lightPosition { 1.f, 1.f, 0.f };
+
+    mat->SetValue(std::string("uObjectColor"), triColor);
+    mat->SetValue(std::string("uLightColor"), lightColor);
+    mat->SetValue(std::string("uLightPosition"), lightPosition);
+    mat->SetValue(std::string("uAmbientIntensity"), 1.f);
+    mat->SetValue(std::string("uCameraPosition"), Scene::GetCamera()->Eye());
 
     //! Create Mesh component
-    float cubeVertices[8 * 3] = 
+    float cubeVertices[8 * 6] = 
     {
-     -1.f, -1.f, -1.f,
-      1.f, -1.f, -1.f,
-      1.f,  1.f, -1.f,
-     -1.f,  1.f, -1.f,
-     -1.f, -1.f,  1.f,
-      1.f, -1.f,  1.f,
-      1.f,  1.f,  1.f,
-     -1.f,  1.f,  1.f
+     -1.f, -1.f, -1.f, -1.f, -1.f, -1.f,
+      1.f, -1.f, -1.f, 1.f, -1.f, -1.f,
+      1.f,  1.f, -1.f, 1.f, 1.f, -1.f,
+     -1.f,  1.f, -1.f, -1.f, 1.f, -1.f,
+     -1.f, -1.f,  1.f, -1.f, -1.f, 1.f,
+      1.f, -1.f,  1.f,  1.f, -1.f, 1.f,
+      1.f,  1.f,  1.f,  1.f, 1.f, 1.f,
+     -1.f,  1.f,  1.f,  -1.f, 1.f, 1.f
     };
     unsigned cubeIndices[36] = 
     {

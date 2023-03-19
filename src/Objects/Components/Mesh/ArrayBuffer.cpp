@@ -63,8 +63,9 @@ namespace _CompositionEngine
 		unsigned numAttributes = unsigned(layout.m_Offsets.size());
 		for (unsigned i = 0; i < numAttributes; ++i)
 		{
-			GL_CALL(glVertexAttribPointer(i, layout.m_Offsets[i] / GetSizeFromType(layout.m_Types[i]), 
-				GetGLTypeFromEnumType(layout.m_Types[i]), GL_FALSE, layout.m_Offsets[i], NULL));
+			GLint size = layout.m_Offsets[i] / GetSizeFromType(layout.m_Types[i]);
+			GL_CALL(glVertexAttribPointer(i, layout.m_AttribCounts[i], GetGLTypeFromEnumType(layout.m_Types[i]), GL_FALSE, 
+				layout.m_VertexSize, (void*)layout.m_Offsets[i]));
 			GL_CALL(glEnableVertexAttribArray(i));
 		}
 	}
@@ -75,7 +76,9 @@ namespace _CompositionEngine
 	void VertexBufferLayout::AddAttribute(unsigned count, BufferLayoutType type)
 	{
 		m_Types.push_back(type);
-		m_Offsets.push_back(GetSizeFromType(type) * count);
+		m_Offsets.push_back(m_VertexSize);
+		m_AttribCounts.push_back(count);
+		m_VertexSize += (GetSizeFromType(type) * count);
 	}
 	IndexBuffer::IndexBuffer(unsigned* indices, unsigned size)
 		: ArrayBuffer(GL_ELEMENT_ARRAY_BUFFER)

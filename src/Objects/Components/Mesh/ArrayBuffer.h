@@ -42,6 +42,8 @@ namespace _CompositionEngine
 	private:
 		std::vector<unsigned> m_Offsets; //!< The "Stride" in bytes between attributes
 		std::vector<BufferLayoutType> m_Types; //!< The type of the elements in each attribute
+	    std::vector<unsigned> m_AttribCounts;
+	    long int m_VertexSize = 0;
 	};
 	class VertexBuffer : public ArrayBuffer
 	{

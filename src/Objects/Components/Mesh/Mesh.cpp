@@ -12,6 +12,7 @@ namespace _CompositionEngine
 	{
 		VertexBufferLayout layout;
 		layout.AddAttribute(3, FLOAT);
+		layout.AddAttribute(3, FLOAT);
 		m_VBO.AssignLayout(layout);
 	}
 	void Mesh::OnUpdate(ApplicationTickEvent& te)
