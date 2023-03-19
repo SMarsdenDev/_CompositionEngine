@@ -26,8 +26,8 @@ namespace _CompositionEngine
 
         glm::mat4 GetTransform(); 
         inline glm::vec3 GetWPosition() const { return m_WPosition; }
-        inline glm::vec3 GetScale()     const     { return m_Scale; } 
-        inline glm::vec3 GetRotation()  const  { return m_Rotation; }
+        inline glm::vec3 GetScale()     const {     return m_Scale; } 
+        inline glm::vec3 GetRotation()  const {  return m_Rotation; }
 
         void SetPosition(glm::vec3 pos);
         void SetScale(glm::vec3 scale);

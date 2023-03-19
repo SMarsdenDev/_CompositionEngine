@@ -29,10 +29,6 @@ namespace _CompositionEngine
                                  m_MoveDirection[2] * te.GetFrameTime()};
       	m_Camera->Eye(m_Camera->Eye() + moveDisplace);
       }
-      if(m_RotationSpeed != 0.0f)
-      {
-        
-      }
 	}
 
 	void CameraController::OnRender(ApplicationRenderEvent& re)
@@ -61,51 +57,50 @@ namespace _CompositionEngine
         m_MoveDirection[1] += lookat.y;
         m_MoveDirection[2] += lookat.z;
         m_InMotion = true;
-        return true;
       }
-      if(ke.GetKey() == 'A')
+      else if(ke.GetKey() == 'A')
       {
         glm::vec3 right = m_Camera->Right();
         m_MoveDirection[0] -= right.x;
         m_MoveDirection[1] -= right.y;
         m_MoveDirection[2] -= right.z;
         m_InMotion = true;
-        return true;
       }
-      if(ke.GetKey() == 'S')
+      else if(ke.GetKey() == 'S')
       {
         glm::vec3 back = m_Camera->Back();
         m_MoveDirection[0] += back.x;
         m_MoveDirection[1] += back.y;
         m_MoveDirection[2] += back.z;
         m_InMotion = true;
-        return true;
       }
-      if(ke.GetKey() == 'D')
+      else if(ke.GetKey() == 'D')
       {
         glm::vec3 right = m_Camera->Right();
         m_MoveDirection[0] += right.x;
         m_MoveDirection[1] += right.y;
         m_MoveDirection[2] += right.z;
         m_InMotion = true;
-        return true;
       }
-      if(ke.GetKey() == 'Q')
+      else if(ke.GetKey() == 'Q')
       {
-        LOG_INFO("YAW LEFT");
-        glm::vec3 back = m_Camera->Back();
-        glm::vec3 right = m_Camera->Right();
-
-        //! Applies a small rotation to the back & right vectors
-        glm::vec3  newBack = glm::vec3(glm::rotate(glm::mat4(1.f), 0.01f, glm::vec3(0.f,1.f,0.f)) * glm::vec4(back.x,back.y,back.z,1.f));
-        glm::vec3  newRight = glm::vec3(glm::rotate(glm::mat4(1.f), 0.01f, glm::vec3(0.f,1.f,0.f)) * glm::vec4(right.x,right.y,right.z,1.f));
-
-        m_Camera->Back(newBack);
-        m_Camera->Right(newRight);
+        glm::vec3 up = m_Camera->Up();
+        m_MoveDirection[0] += up.x;
+        m_MoveDirection[1] += up.y;
+        m_MoveDirection[2] += up.z;
+        m_InMotion = true;
       }
-      return false;
+      else if(ke.GetKey() == 'E')
+      {
+        glm::vec3 up = m_Camera->Up();
+        m_MoveDirection[0] -= up.x;
+        m_MoveDirection[1] -= up.y;
+        m_MoveDirection[2] -= up.z;
+        m_InMotion = true;
+      }
+      return m_InMotion;
     }
-    return false;
+    return m_InMotion;
 	}
 	bool CameraController::OnKeyReleasedEvent(KeyReleasedEvent& ke)
 	{
@@ -140,6 +135,22 @@ namespace _CompositionEngine
         m_MoveDirection[0] -= right.x;
         m_MoveDirection[1] -= right.y;
         m_MoveDirection[2] -= right.z;
+        handled = true;
+      }
+      if(ke.GetKey() == 'Q')
+      {
+        glm::vec3 up = m_Camera->Up();
+        m_MoveDirection[0] -= up.x;
+        m_MoveDirection[1] -= up.y;
+        m_MoveDirection[2] -= up.z;
+        handled = true;
+      }
+      if(ke.GetKey() == 'E')
+      {
+        glm::vec3 up = m_Camera->Up();
+        m_MoveDirection[0] += up.x;
+        m_MoveDirection[1] += up.y;
+        m_MoveDirection[2] += up.z;
         handled = true;
       }
       if(m_MoveDirection[0] == 0.f &&

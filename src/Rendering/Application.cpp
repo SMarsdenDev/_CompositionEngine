@@ -2,12 +2,7 @@
 #include "Window.h"
 #include "Renderer.h"
 #include "glm/glm.hpp"
-#include "../Objects/Object.h"
-#include "../Objects/Components/Material/Material.h"
-#include "../Objects/Components/Mesh/Mesh.h"
-#include "../Objects/Components/Material/ShaderSource.h"
-#include "../Objects/Components/CameraController/CameraController.h"
-#include "../Objects/Camera.h"
+#include "3DRenderTestScene.h"
 #include "../Events/KeyEvent.h"
 #include "../Events/MouseEvent.h"
 #include "../Events/ApplicationEvent.h"
@@ -20,68 +15,22 @@ namespace _CompositionEngine
 
   Application::Application(EventCallbackFn fn)
   	: m_IsRunning(true), 
-  	  m_Window(new Window("TEST WINDOW", 600, 600, fn))
+  	  m_Window(new Window("TEST WINDOW", 600, 600, fn)),
+      m_Scene(new RenderTestScene())
   {
-    m_Window->SetClearColor(glm::vec3(0.5f, 0.05f, 0.35f));
-
-    //! Create test Camera
-    m_CurrentCamera = new Camera(glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f,0.f,-1.f),
-               glm::vec3(0.f,1.f,0.f), 90.f, 
-               (float)(m_Window->GetWidth() / m_Window->GetHeight()), 
-               0.1f, 1000.f);
-
-    //! Create Material component
-    std::string filepath = "data/Shaders/test.shader"; 
-    Material* mat = new Material(filepath);
-    glm::vec3 triColor { 1.0f, 1.0f, 0.35f };
-    mat->SetValue(std::string("uVertColor"), triColor);
-
-    //! Create Mesh component
-    float triangleVertices[9] = 
-    {
-      -0.5f, -0.5f, 0.0f,
-      0.5f, -0.5f, 0.0f,
-      0.0f, 0.5f, 0.0f
-    };
-    unsigned triangleIndices[3] = 
-    {
-      0, 1, 2
-    };
-
-    Mesh* mesh = new Mesh(triangleVertices, sizeof(triangleVertices),
-                          triangleIndices, sizeof(triangleIndices));
-    mesh->SetPosition(glm::vec3(0.f,0.25f,0.f));
-    mesh->SetScale(glm::vec3(0.25f,0.25f,0.25f));
-
-    //! Create Camera Controller Component
-    CameraController* camControl = new CameraController(m_CurrentCamera);
-
-    //! Create test object
-    Object* obj = new Object();
-    obj->AddComponent(mat);
-    obj->AddComponent(mesh);
-    obj->AddComponent(camControl);
-    m_Objects.push_back(obj);
+    m_Window->SetClearColor(glm::vec3(0.1f, 0.01f, 0.07f));
   }
   
   Application::~Application()
   {
   	delete m_Window;
-    delete m_CurrentCamera;
-    for(Object* obj : m_Objects)
-    {
-      delete obj;
-    }
+    delete m_Scene;
   }
   
   bool Application::OnTick(ApplicationTickEvent& e)
   {
     //LOG_INFO(e.ToString());
-    for(Object* obj : m_Objects)
-    {
-      obj->OnUpdate(e);
-    }
-    return true;
+    return m_Scene->OnUpdate(e);
   }
   
   bool Application::OnRender(ApplicationRenderEvent& e)
@@ -89,12 +38,9 @@ namespace _CompositionEngine
     //LOG_INFO(e.ToString());
     m_Window->StartFrame();
     //! Take data from ApplicationRenderEvent to determine details about object rendering (i.e. normals, depth, post-processing, etc.)
-     for(Object* obj : m_Objects)
-     {
-       Renderer::Draw(*obj, *m_CurrentCamera, e);
-     }
+    bool result = m_Scene->OnRender(e);
     m_Window->EndFrame();
-    return true;
+    return result;
   }
   
   void Application::OnEvent(Event& e)
@@ -111,11 +57,7 @@ namespace _CompositionEngine
     dispatcher.Dispatch<ApplicationTickEvent>(BIND_EVENT_FN(OnTick));
     dispatcher.Dispatch<ApplicationRenderEvent>(BIND_EVENT_FN(OnRender));
 
-    if(e.GetIsHandled() != true)
-    {
-      for(Object* obj : m_Objects)
-        obj->OnEvent(e);
-    }
+    m_Scene->OnEvent(e);
   }
 
   bool Application::OnKey(KeyEvent& e)
