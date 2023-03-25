@@ -36,10 +36,8 @@ namespace _CompositionEngine
   bool Application::OnRender(ApplicationRenderEvent& e)
   {
     //LOG_INFO(e.ToString());
-    m_Window->StartFrame();
     //! Take data from ApplicationRenderEvent to determine details about object rendering (i.e. normals, depth, post-processing, etc.)
     bool result = m_Scene->OnRender(e);
-    m_Window->EndFrame();
     return result;
   }
   
@@ -55,6 +53,16 @@ namespace _CompositionEngine
     dispatcher.Dispatch<ApplicationRenderEvent>(BIND_EVENT_FN(OnRender));
 
     m_Scene->OnEvent(e);
+  }
+  //! Will be called by Engine
+  void Application::ClearScene()
+  {
+    m_Window->StartFrame();
+  }
+  //! Will be called by Engine
+  void Application::EndFrame()
+  {
+    m_Window->EndFrame();
   }
 
   bool Application::OnKey(KeyEvent& e)

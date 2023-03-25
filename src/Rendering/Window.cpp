@@ -51,6 +51,7 @@ namespace _CompositionEngine
     return glfwGetKey(m_Window, key) == GLFW_REPEAT;
   }
 
+  //! Called by Application to denote the start of a rendering loop
   void Window::StartFrame()
   {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

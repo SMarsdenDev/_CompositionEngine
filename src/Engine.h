@@ -2,6 +2,7 @@
 namespace _CompositionEngine
 {
   class Application;
+  class EngineUI;
 	class Event;
 	class Engine
 	{
@@ -17,8 +18,9 @@ namespace _CompositionEngine
 		static Engine* s_Instance;
 		Application* m_Application;
 
-		float m_FrameTime;
+		EngineUI* m_UIPtr = nullptr;
 
+		float m_FrameTime;
 		bool m_IsRunning;
 	};
 }

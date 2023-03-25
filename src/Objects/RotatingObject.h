@@ -5,10 +5,10 @@
 namespace _CompositionEngine
 {
   class Component;
-  class RotatingCube : public Object
+  class RotatingObject : public Object
   {
     public:
-      RotatingCube();
+      RotatingObject();
 
 	  virtual void OnUpdate(ApplicationTickEvent& e);
 	  virtual void OnRender(ApplicationRenderEvent& e);

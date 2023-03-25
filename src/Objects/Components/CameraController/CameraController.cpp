@@ -102,12 +102,12 @@ namespace _CompositionEngine
       else if(ke.GetKey() == 'U')
       {
         m_IsMoving[Roll] = true;
-        m_MoveAmount[Roll] += -m_RotationSpeed;
+        m_MoveAmount[Roll] += m_RotationSpeed;
       }
       else if(ke.GetKey() == 'O')
       {
         m_IsMoving[Roll] = true;
-        m_MoveAmount[Roll] += m_RotationSpeed;
+        m_MoveAmount[Roll] += -m_RotationSpeed;
       }
     }
     return true;

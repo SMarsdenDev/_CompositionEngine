@@ -1,4 +1,4 @@
-#include "RotatingCube.h"
+#include "RotatingObject.h"
 #include "Components/Mesh/Mesh.h"
 #include "../Events/ApplicationEvent.h"
 #include "../Log.h"
@@ -6,10 +6,10 @@
 
 namespace _CompositionEngine
 {
-  RotatingCube::RotatingCube()
+  RotatingObject::RotatingObject()
   {
   }
-  void RotatingCube::OnUpdate(ApplicationTickEvent& e)
+  void RotatingObject::OnUpdate(ApplicationTickEvent& e)
   {
   	Component* MeshComponent = GetComponent("MeshComponent");
     if(MeshComponent == nullptr)
@@ -22,12 +22,12 @@ namespace _CompositionEngine
     Object::OnUpdate(e);
   }
 
-  void RotatingCube::OnRender(ApplicationRenderEvent& e)
+  void RotatingObject::OnRender(ApplicationRenderEvent& e)
   {
     Object::OnRender(e);
   }
 
-  void RotatingCube::OnEvent(Event& e)
+  void RotatingObject::OnEvent(Event& e)
   {
     Object::OnEvent(e);
   }

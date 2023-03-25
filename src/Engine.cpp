@@ -3,6 +3,7 @@
 #include "Rendering/Application.h"
 #include "Log.h"
 #include "Input.h"
+#include "EngineUI.h"
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 #include "GLFW/glfw3.h" //!< glfwGetTime
@@ -24,6 +25,7 @@ namespace _CompositionEngine
 
 			//! Initialize Systems
 			Input::Input(m_Application);
+			m_UIPtr = new EngineUI(m_Application);
 		}
 		else
 		{
@@ -35,24 +37,35 @@ namespace _CompositionEngine
 	Engine::~Engine()
 	{
 		delete m_Application;
+		if(m_UIPtr	!= nullptr)
+		{
+			delete m_UIPtr;
+			m_UIPtr	= nullptr;
+		}
 	}
 
 	void Engine::Run()
 	{
 		do
 		{
+
 			if (Input::IsKeyPressed(GLFW_KEY_ESCAPE))
 				m_IsRunning = false;
-			double startFrameTime = glfwGetTime();
 
+			//! Create variabled
+			double startFrameTime = glfwGetTime();
+			m_Application->ClearScene();
 			ApplicationTickEvent appTick(m_FrameTime);
 			ApplicationRenderEvent appRender;
-
 			BroadcastEvent(appTick);
-			BroadcastEvent(appRender);
-			
+			BroadcastEvent(appRender); //!< Renders active scene
+
+			if(m_UIPtr)
+			  m_UIPtr->Render();
+
 			double endFrameTime = glfwGetTime();
 			m_FrameTime = (float)(endFrameTime - startFrameTime);
+			m_Application->EndFrame();
 		} while (m_IsRunning);
 	}
 	void Engine::BroadcastEvent(Event& e)

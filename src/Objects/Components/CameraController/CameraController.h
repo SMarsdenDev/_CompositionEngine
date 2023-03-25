@@ -34,6 +34,8 @@ namespace _CompositionEngine
         virtual void OnRender(ApplicationRenderEvent& re) override;
         virtual void OnEvent(Event& e) override;
 
+        inline void SetCameraSpeed(float speed) { m_CameraSpeed = speed; }
+
         COMPONENT_TYPE(CameraControllerComponent);
 	private:
         bool OnKeyPressedEvent(KeyPressedEvent& ke);

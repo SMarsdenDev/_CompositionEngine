@@ -25,7 +25,7 @@ namespace _CompositionEngine
 		//! Gets the Material component from the parent
 		//! then sets the uModel uniform through the 
 		//! Material component
-        dynamic_cast<Material*>(GetParent()->GetComponent("MaterialComponent"))->SetValue("uModelMatrix", GetTransform());
+    dynamic_cast<Material*>(GetParent()->GetComponent("MaterialComponent"))->SetValue("uModelMatrix", GetTransform());
 		
 		GL_CALL(glDrawElements(GL_TRIANGLES, m_IBO.Size(), GL_UNSIGNED_INT, (void*)0));
 	}
@@ -53,7 +53,7 @@ namespace _CompositionEngine
 	}
 	void Mesh::SetScale(glm::vec3 scale)
 	{
-	  m_Scale = scale;
+	    m_Scale = scale;
       m_ModelIsDirty = true;
 	}
 	void Mesh::SetRotation(RotationAxis axis, float degrees)

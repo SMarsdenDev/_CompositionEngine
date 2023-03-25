@@ -1,5 +1,7 @@
 #include <functional>
+#include <vector>
 #include "Window.h"
+#include "Scene.h"
 
 namespace _CompositionEngine
 {
@@ -11,8 +13,8 @@ namespace _CompositionEngine
 	class ApplicationRenderEvent;
 	class ApplicationTickEvent;
 	class Object;
+	struct Light;
     class Camera;
-    class Scene;
 	class Application
 	{
 	public:
@@ -24,8 +26,12 @@ namespace _CompositionEngine
 		bool OnRender(ApplicationRenderEvent& e);
 		void OnEvent(Event& e);
 
-		inline Window* GetWindow() const { return m_Window; }
+		void ClearScene();
+		void EndFrame();
 
+		inline Window* GetWindow() const { return m_Window; }
+        inline std::vector<Object*>* GetSceneObjects() const { return m_Scene->GetObjects(); }
+        inline std::vector<Light*>* GetSceneLights() const { return m_Scene->GetLights(); }
 	private:
 		bool OnKey(KeyEvent& e);
 		bool OnMouseButton(MouseButtonEvent& e);

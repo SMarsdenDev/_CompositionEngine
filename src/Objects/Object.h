@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "glm/glm.hpp"
 #include "Components/Component.h"
 namespace _CompositionEngine
 {
@@ -17,6 +18,9 @@ namespace _CompositionEngine
 	  virtual void OnUpdate(ApplicationTickEvent& e);
 	  virtual void OnRender(ApplicationRenderEvent& e);
 	  virtual void OnEvent(Event& e);
+
+      glm::vec3 GetWorldPosition() const;
+      void SetWorldPosition(glm::vec3 pos);
 
 	  Component* GetComponent(const char* name) const;
 	private:

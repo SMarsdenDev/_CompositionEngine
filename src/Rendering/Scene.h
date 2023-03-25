@@ -32,8 +32,9 @@ namespace _CompositionEngine
       inline void AddLight(Light* light) { m_Lights.push_back(light); }
       void SetRenderCamera(Camera* cam);
 
-      inline std::vector<Object*> GetObjects() const { return m_Objects; }
-      inline Camera* GetCamera() const { return m_RenderCamera; }
+      inline std::vector<Object*>* GetObjects() { return &m_Objects; }
+      inline std::vector<Light*>* GetLights() { return &m_Lights; }
+      inline Camera* GetCamera() { return m_RenderCamera; }
 
     protected:
       void UploadLightData(Object* obj);
