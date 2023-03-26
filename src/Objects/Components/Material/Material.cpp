@@ -119,4 +119,22 @@ namespace _CompositionEngine
 	{
 
 	}
+
+	glm::vec3 Material::GetObjectColor() const
+	{
+	  try
+	  {
+        return m_Vec3Data.at("uObjectColor").second;
+	  }
+	  catch(std::out_of_range& e)
+	  {
+	  	LOG_ERROR("Object Color nonexistant without Material Component");
+	  	LOG_ERROR("Returning default vec3 data");
+        return glm::vec3(1.f);
+	  }
+	}
+	void Material::SetObjectColor(glm::vec3 color)
+	{
+		m_Vec3Data.at("uObjectColor").second = color;
+	}
 }

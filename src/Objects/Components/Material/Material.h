@@ -29,6 +29,12 @@ namespace _CompositionEngine
 		virtual void OnRender(ApplicationRenderEvent& re) override;
         virtual void OnEvent(Event& e) override;
 
+        //! Uniform Getters
+        glm::vec3 GetObjectColor() const;
+
+        //! Uniform Setters
+        void SetObjectColor(glm::vec3 col);
+
 		COMPONENT_TYPE(MaterialComponent)
 
 	private:

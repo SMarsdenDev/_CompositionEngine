@@ -8,7 +8,7 @@ namespace _CompositionEngine
   Camera::Camera(glm::vec3 pos, glm::vec3 lookat, glm::vec3 up,
 			float fov, float aspect, float near, float far)
   : m_Back(-lookat), m_Right(glm::cross(lookat,up)), m_Up(up), m_Eye(pos),
-    m_FOV(fov), m_Aspect(aspect), m_Near(near), m_Far(far)
+    m_FOV(fov), m_Aspect(aspect), m_Near(near), m_Far(far), Object::Object("Camera")
   {
   }
 

@@ -6,7 +6,8 @@
 
 namespace _CompositionEngine
 {
-  RotatingObject::RotatingObject()
+  RotatingObject::RotatingObject(const char* name)
+  : Object::Object(name)
   {
   }
   void RotatingObject::OnUpdate(ApplicationTickEvent& e)

@@ -102,8 +102,8 @@ namespace _CompositionEngine
     camControl->SetCameraSpeed(1.f);
 
     //! Create test objects
-    Object* obj = new Object();
-    RotatingObject* pyramid = new RotatingObject();
+    Object* obj = new Object("Stationary Cube");
+    RotatingObject* pyramid = new RotatingObject("Rotating Pyramid");
     obj->AddComponent(cubeMat);
     obj->AddComponent(cubeMesh);
 

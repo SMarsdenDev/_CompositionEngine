@@ -60,8 +60,8 @@ namespace _CompositionEngine
 	}
 	void VertexBuffer::AssignLayout(VertexBufferLayout& layout)
 	{
-		unsigned numAttributes = unsigned(layout.m_Offsets.size());
-		for (unsigned i = 0; i < numAttributes; ++i)
+		size_t numAttributes = layout.m_Offsets.size();
+		for (size_t i = 0; i < numAttributes; ++i)
 		{
 			GLint size = layout.m_Offsets[i] / GetSizeFromType(layout.m_Types[i]);
 			GL_CALL(glVertexAttribPointer(i, layout.m_AttribCounts[i], GetGLTypeFromEnumType(layout.m_Types[i]), GL_FALSE, 

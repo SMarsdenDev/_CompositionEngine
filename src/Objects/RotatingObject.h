@@ -8,7 +8,7 @@ namespace _CompositionEngine
   class RotatingObject : public Object
   {
     public:
-      RotatingObject();
+      RotatingObject(const char* name);
 
 	  virtual void OnUpdate(ApplicationTickEvent& e);
 	  virtual void OnRender(ApplicationRenderEvent& e);
