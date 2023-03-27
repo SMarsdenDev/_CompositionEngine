@@ -31,7 +31,9 @@ namespace _CompositionEngine
 
 		inline Window* GetWindow() const { return m_Window; }
         inline std::vector<Object*>* GetSceneObjects() const { return m_Scene->GetObjects(); }
-        inline std::vector<Light*>* GetSceneLights() const { return m_Scene->GetLights(); }
+        inline LightData* GetSceneLightData() const { return m_Scene->GetLightData(); }
+		inline Camera* GetSceneCamera() const { return m_Scene->GetCamera(); }
+
 	private:
 		bool OnKey(KeyEvent& e);
 		bool OnMouseButton(MouseButtonEvent& e);

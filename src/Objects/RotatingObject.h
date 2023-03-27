@@ -16,6 +16,6 @@ namespace _CompositionEngine
 
     private:
       float m_Angle = 0.f;
-      float m_RotationSpeed = 1.f;
+      float m_RotationSpeed = 45.f; //!< In Degrees per Second
   };
 }

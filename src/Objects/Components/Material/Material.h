@@ -7,6 +7,8 @@
 #include "glm/glm.hpp"
 #include "../../../Log.h"
 
+#define MAX_ARRAY_SIZE 16
+
 namespace _CompositionEngine
 {
 	class Object;
@@ -17,6 +19,7 @@ namespace _CompositionEngine
 		~Material();
 
 		void SetValue(std::string name, glm::vec3 value);
+		void SetValue(std::string name, glm::vec3* value);
 		void SetValue(std::string name, glm::vec4 value);
 		void SetValue(std::string name, glm::mat3 value);
 		void SetValue(std::string name, glm::mat4 value);
@@ -41,12 +44,13 @@ namespace _CompositionEngine
 		Shader* m_Shader = nullptr;
 		UniformData* GetUniformData(std::string name);
 		const std::vector<UniformData>* m_UniformData = nullptr;
-		std::map<std::string, std::pair<int, glm::vec3>> m_Vec3Data;
-		std::map<std::string, std::pair<int, glm::vec4>> m_Vec4Data;
-		std::map<std::string, std::pair<int, glm::mat3>> m_Mat3Data;
-		std::map<std::string, std::pair<int, glm::mat4>> m_Mat4Data;
-		std::map<std::string, std::pair<int,     float>> m_FloatData;
-		std::map<std::string, std::pair<int,       int>> m_IntData;
+		std::map<std::string, std::pair<int,  glm::vec3>> m_Vec3Data;
+		std::map<std::string, std::pair<int, glm::vec3*>> m_Vec3ArrayData;
+		std::map<std::string, std::pair<int,  glm::vec4>> m_Vec4Data;
+		std::map<std::string, std::pair<int,  glm::mat3>> m_Mat3Data;
+		std::map<std::string, std::pair<int,  glm::mat4>> m_Mat4Data;
+		std::map<std::string, std::pair<int,      float>> m_FloatData;
+		std::map<std::string, std::pair<int,        int>> m_IntData;
 
 	};
 }

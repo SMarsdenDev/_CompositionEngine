@@ -7,7 +7,8 @@ namespace _CompositionEngine
 {
   Scene::Scene()
   {
-
+    m_LightData = new LightData();
+    m_LightData->m_AmbientIntensity = 0.025f;
   }
   Scene::~Scene()
   {
@@ -15,19 +16,14 @@ namespace _CompositionEngine
     {
       delete obj;
     }
-    for(Light* light : m_Lights)
-    {
-      delete light;
-    }
+    delete m_LightData;;
     delete m_RenderCamera;
   }
   void Scene::AddLight(glm::vec3 pos, glm::vec3 col)
   {
-    Light* light = new Light();
-    light->m_Position = pos;
-    light->m_Color = col;
-    light->m_AmbientIntensity = 1.f;
-    AddLight(light);
+    m_LightData->m_Position.push_back(pos);
+    m_LightData->m_Color.push_back(col);
+    m_ActiveLightCount++;
   }
   void Scene::SetRenderCamera(Camera* cam)
   {
@@ -39,17 +35,15 @@ namespace _CompositionEngine
   }
   void Scene::UploadLightData(Object* obj)
   {
-    for(Light* light : m_Lights)
+    Material* mat = dynamic_cast<Material*>(obj->GetComponent("MaterialComponent"));
+    if(mat == nullptr)
     {
-      Material* mat = dynamic_cast<Material*>(obj->GetComponent("MaterialComponent"));
-      if(mat == nullptr)
-      {
-        LOG_ERROR("Attempting to Upload Light Data to Object without Material Component");
-        abort();
-      }
-      mat->SetValue("uLightColor", light->m_Color);
-      mat->SetValue("uLightPosition", light->m_Position);
-      mat->SetValue("uAmbientIntensity", light->m_AmbientIntensity);
+      LOG_ERROR("Attempting to Upload Light Data to Object without Material Component");
+      abort();
     }
+    mat->SetValue("uActiveLightCount", m_ActiveLightCount);
+    mat->SetValue("uLightColor", &(m_LightData->m_Color[0]));
+    mat->SetValue("uLightPosition", &(m_LightData->m_Position[0]));
+    mat->SetValue("uAmbientIntensity", m_LightData->m_AmbientIntensity);
   }
 }

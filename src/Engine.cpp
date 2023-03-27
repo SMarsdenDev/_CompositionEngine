@@ -57,12 +57,13 @@ namespace _CompositionEngine
 			m_Application->ClearScene();
 			ApplicationTickEvent appTick(m_FrameTime);
 			ApplicationRenderEvent appRender;
-			BroadcastEvent(appTick);
 			BroadcastEvent(appRender); //!< Renders active scene
 
 			if(m_UIPtr)
 			  m_UIPtr->Render();
 
+			BroadcastEvent(appTick);
+			
 			double endFrameTime = glfwGetTime();
 			m_FrameTime = (float)(endFrameTime - startFrameTime);
 			m_Application->EndFrame();

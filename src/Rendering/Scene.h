@@ -10,10 +10,10 @@ namespace _CompositionEngine
   class ApplicationTickEvent;
   class Event;
 
-  struct Light
+  struct LightData
   {
-    glm::vec3 m_Position;
-    glm::vec3 m_Color;
+    std::vector<glm::vec3> m_Position;
+    std::vector<glm::vec3> m_Color;
     float m_AmbientIntensity;
   };
 
@@ -27,20 +27,20 @@ namespace _CompositionEngine
       virtual bool OnRender(ApplicationRenderEvent& re) = 0;
       virtual void OnEvent(Event& e) = 0;
 
-      inline void AddObject(Object* obj) { m_Objects.push_back(obj);  }
+      inline void AddObject(Object* obj) { m_Objects.push_back(obj); }
       void AddLight(glm::vec3 pos, glm::vec3 col);
-      inline void AddLight(Light* light) { m_Lights.push_back(light); }
       void SetRenderCamera(Camera* cam);
 
       inline std::vector<Object*>* GetObjects() { return &m_Objects; }
-      inline std::vector<Light*>* GetLights() { return &m_Lights; }
+      inline LightData* GetLightData() { return m_LightData; }
       inline Camera* GetCamera() { return m_RenderCamera; }
 
     protected:
       void UploadLightData(Object* obj);
     private:
       std::vector<Object*> m_Objects;
-      std::vector<Light*> m_Lights;
+      int m_ActiveLightCount = 0;
+      LightData* m_LightData;
       Camera* m_RenderCamera = nullptr;
   };
 }

@@ -17,6 +17,11 @@ namespace _CompositionEngine
         	std::pair<std::string, std::pair<int, glm::vec3>> nextValue{data.m_Name, {data.m_Location, glm::vec3(1.f)}};
             m_Vec3Data.insert(nextValue);
         }
+        if(strcmp(data.m_Type.c_str(), "vec3[16]") == 0)
+        {
+        	std::pair<std::string, std::pair<int, glm::vec3*>> nextValue{data.m_Name, {data.m_Location, new glm::vec3[16]}};
+            m_Vec3ArrayData.insert(nextValue);
+        }
         else if(strcmp(data.m_Type.c_str(), "vec4") == 0)
         {
         	std::pair<std::string, std::pair<int, glm::vec4>> nextValue{data.m_Name, {data.m_Location, glm::vec4(1.f)}};
@@ -54,6 +59,10 @@ namespace _CompositionEngine
 	{
       m_Vec3Data[name] = std::make_pair(m_Shader->GetUniformLocation(name), value);
 	}
+	void Material::SetValue(std::string name, glm::vec3* value)
+	{
+      m_Vec3ArrayData[name] = std::make_pair(m_Shader->GetUniformLocation(name), value);
+	}
 	void Material::SetValue(std::string name, glm::vec4 value)
 	{
       m_Vec4Data[name] = std::make_pair(m_Shader->GetUniformLocation(name), value);
@@ -81,6 +90,10 @@ namespace _CompositionEngine
       for(const auto& uniform : m_Vec3Data)
       {
       	GL_CALL(glUniform3fv(uniform.second.first, 1, &uniform.second.second[0]));
+      }
+      for(const auto& uniform : m_Vec3ArrayData)
+      {
+      	GL_CALL(glUniform3fv(uniform.second.first, MAX_ARRAY_SIZE, &uniform.second.second[0][0]));
       }
       for(const auto& uniform : m_Vec4Data)
       {

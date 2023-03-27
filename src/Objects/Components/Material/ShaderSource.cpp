@@ -143,6 +143,16 @@ namespace _CompositionEngine
         std::string typeToken(Tokenize(std::string(), " "));
         std::string nameToken(Tokenize(std::string(), " "));
 
+  	    //! If the nameToken ends with an array bracket of size 16, append it to the
+  	    //!   the typeToken
+        size_t arraySizePosition = nameToken.length() - strlen("[16]");
+        if(nameToken.substr(arraySizePosition, strlen("[16]"))
+        	 == std::string("[16]"))
+        {
+        	typeToken.append("[16]");
+        	nameToken.erase(arraySizePosition, strlen("[16]"));
+        }
+
         uniformTypes.push_back(typeToken);
         uniformNames.push_back(nameToken);
 

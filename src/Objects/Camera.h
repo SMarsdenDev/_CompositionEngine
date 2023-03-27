@@ -30,6 +30,8 @@ namespace _CompositionEngine
         inline float Near() const      { return m_Near; }
         inline float Far() const       { return m_Far; }
 
+        inline glm::vec3 GetRotation() const { return glm::vec3(m_PitchDegrees, m_YawDegrees, m_RollDegrees); }
+
         glm::mat4 View();
         glm::mat4 Persp();
 
@@ -62,5 +64,8 @@ namespace _CompositionEngine
 		glm::vec3 m_Eye;
 
 		float m_FOV, m_Aspect, m_Near, m_Far;
+
+		//! Used to display in EngineUI
+		float m_RollDegrees, m_PitchDegrees, m_YawDegrees;
 	};
 }

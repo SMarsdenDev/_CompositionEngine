@@ -42,8 +42,8 @@ namespace _CompositionEngine
         bool OnKeyReleasedEvent(KeyReleasedEvent& ke);
 
 		Camera* m_Camera;
-		float m_CameraSpeed = 0.5f;
-		float m_RotationSpeed = 1.f;
+		float m_CameraSpeed = 1.5f;
+		float m_RotationSpeed = 45.f;
 
 		bool m_IsMoving[6]    = {false, false, false, false, false, false};
 		float m_MoveAmount[6] = {0.f,   0.f,   0.f,   0.f,   0.f,   0.f};

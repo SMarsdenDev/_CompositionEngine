@@ -19,6 +19,8 @@ namespace _CompositionEngine
       return;
     }
     m_Angle += m_RotationSpeed * e.GetFrameTime();
+    if(m_Angle >= 360.f)
+      m_Angle -= 360.f;
     dynamic_cast<Mesh*>(MeshComponent)->SetRotation(RotationAxis::Y, m_Angle);
     Object::OnUpdate(e);
   }

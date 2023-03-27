@@ -47,7 +47,7 @@ namespace _CompositionEngine
         return comp;  
       }
     }
-    LOG_WARN("Component {} not foud when searched for", name);
+    LOG_WARN("Component {} not found when searched for", name);
     return nullptr;
   }
 

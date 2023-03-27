@@ -64,7 +64,10 @@ namespace _CompositionEngine
 
   void Camera::Roll(float degrees)
   {
-    glm::mat4 rotate = glm::rotate(degrees, Lookat());
+    m_RollDegrees += degrees;
+    if(m_RollDegrees >= 360.f)
+      m_RollDegrees -= 360.f;
+    glm::mat4 rotate = glm::rotate(glm::radians(degrees), Lookat());
     glm::vec3 upVec = Up();
     glm::vec3 rVec = Right();
     Up(glm::vec3(rotate * glm::vec4(upVec.x, upVec.y, upVec.z, 1.f)));
@@ -73,7 +76,10 @@ namespace _CompositionEngine
 
   void Camera::Pitch(float degrees)
   {
-    glm::mat4 rotate = glm::rotate(degrees, Right());
+    m_PitchDegrees += degrees;
+    if(m_PitchDegrees >= 360.f)
+      m_PitchDegrees -= 360.f;
+    glm::mat4 rotate = glm::rotate(glm::radians(degrees), Right());
     glm::vec3 upVec = Up();
     glm::vec3 backVec = Back();
     Up(glm::vec3(rotate * glm::vec4(upVec.x, upVec.y, upVec.z, 1.f)));
@@ -82,7 +88,10 @@ namespace _CompositionEngine
 
   void Camera::Yaw(float degrees)
   {
-    glm::mat4 rotate = glm::rotate(degrees, Up());
+    m_YawDegrees += degrees;
+    if(m_YawDegrees >= 360.f)
+      m_YawDegrees -= 360.f;
+    glm::mat4 rotate = glm::rotate(glm::radians(degrees), Up());
     glm::vec3 backVec = Back();
     glm::vec3 rVec = Right();
     Right(glm::vec3(rotate * glm::vec4(rVec.x, rVec.y, rVec.z, 1.f)));

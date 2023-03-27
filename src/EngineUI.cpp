@@ -7,6 +7,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
 #include "Objects/Object.h"
+#include "Objects/Camera.h"
 #include <vector>
 namespace _CompositionEngine
 {
@@ -39,7 +40,7 @@ namespace _CompositionEngine
   {
     //! Grab Scene Data
     std::vector<Object*>* objs = m_Application->GetSceneObjects();
-    std::vector<Light*>* lights = m_Application->GetSceneLights();
+    LightData* lightData = m_Application->GetSceneLightData();
 
   	//! Start ImGUI Frame
   	ImGui_ImplOpenGL3_NewFrame();
@@ -64,8 +65,8 @@ namespace _CompositionEngine
           glm::vec3 objScale = currObject->GetScale();
           glm::vec3 objRotation = currObject->GetRotation();
 
-          ImGui::SliderFloat3("World Position", glm::value_ptr(objPosition), -2.f, 2.f);
-          ImGui::SliderFloat3("Scale",          glm::value_ptr(objScale), -2.f, 2.f);
+          ImGui::SliderFloat3("World Position", glm::value_ptr(objPosition), -10.f, 10.f);
+          ImGui::SliderFloat3("Scale",          glm::value_ptr(objScale), -10.f, 10.f);
           ImGui::SliderFloat3("Rotation",       glm::value_ptr(objRotation), -360.f, 360.f);
 
           currObject->SetWorldPosition(objPosition);
@@ -90,17 +91,15 @@ namespace _CompositionEngine
 
     ImGui::Begin("Light Editor");
     //! Build Light List
-    size_t numLights = lights->size();
+    size_t numLights = lightData->m_Position.size();
     for(size_t i = 0; i < numLights; ++i)
     {
-      Light* currLight = (*lights)[i]; //!< Readability
-
-      ImGui::PushID(currLight);
+      ImGui::PushID(&lightData->m_Position[i]);
       if(ImGui::TreeNode("Light"))
       {
-        ImGui::SliderFloat("Ambient Intensity", &currLight->m_AmbientIntensity, 0.f, 10.f);
-        ImGui::SliderFloat3("Light Position", glm::value_ptr(currLight->m_Position), -10.f, 10.f);
-        ImGui::ColorEdit3("Light Color", glm::value_ptr(currLight->m_Color));
+        ImGui::SliderFloat("Ambient Intensity", &lightData->m_AmbientIntensity, 0.f, 10.f);
+        ImGui::SliderFloat3("Light Position", glm::value_ptr(lightData->m_Position[i]), -10.f, 10.f);
+        ImGui::ColorEdit3("Light Color", glm::value_ptr(lightData->m_Color[i]));
 
         ImGui::TreePop();
       }
@@ -108,7 +107,21 @@ namespace _CompositionEngine
     }
     ImGui::End(); //!< End Light Editor
 
-    //! Build Camera
+    //! Build Camera Display
+    ImGui::Begin("Camera Editor");
+
+    Camera* cam = m_Application->GetSceneCamera();
+    glm::vec3 camPos = cam->Eye();
+    glm::vec3 camRot = cam->GetRotation();
+    ImGui::Text("Camera Position: (%f, %f, %f)", camPos.x, camPos.y, camPos.z);
+    ImGui::Text("Camera Roll: %f", camRot.z);
+    ImGui::Text("Camera Pitch: %f", camRot.x);
+    ImGui::Text("Camera Yaw: %f", camRot.y);
+    ImGui::Spacing();
+    ImGui::Text("Camera FOV: %f", cam->FOV());
+    ImGui::Text("Camera Near & Far: (%f, %f)", cam->Near(), cam->Far());
+    
+    ImGui::End(); //!< End Camera Display
 
     //! DEBUG: Print first two object positions stored in vector
     //LOG_INFO("Object Position 0: {0}, {1}, {2}", objPositionVec[0].x, objPositionVec[0].y, objPositionVec[0].z);

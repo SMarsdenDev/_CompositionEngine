@@ -29,35 +29,51 @@ in vec3 vFragPos;
 
 uniform vec3 uObjectColor;
 
-uniform vec3 uLightColor;
-uniform vec3 uLightPosition;
+uniform int uActiveLightCount;
+uniform vec3[16] uLightColor;
+uniform vec3[16] uLightPosition;
 uniform float uAmbientIntensity;
 
 uniform vec3 uCameraPosition;
 
 vec3 CalculateAmbient()
 {
-  return uAmbientIntensity * uLightColor;
+  vec3 totalAmbient;
+  for(int i = 0; i < uActiveLightCount; ++i)
+  {
+    totalAmbient += (uAmbientIntensity * uLightColor[i]);
+  }
+  return totalAmbient;
 }
 vec3 CalculateDiffuse()
 {
+  vec3 totalDiff;
+  for(int i = 0; i < uActiveLightCount; ++i)
+  {
 	vec3 norm = normalize(vNormal);
-	vec3 lightDir = normalize(uLightPosition - vFragPos);
+	vec3 lightDir = normalize(uLightPosition[i] - vFragPos);
 
 	float diff = max(dot(norm, lightDir), 0.f);
-	return diff * uLightColor;
+	totalDiff += (diff * uLightColor[i]);  
+  }
+  return totalDiff;
 }
 
 vec3 CalculateSpecular()
 {
-	vec3 lightDir = normalize(uLightPosition - vFragPos);
+  vec3 totalSpec;
+  for(int i = 0; i < uActiveLightCount; ++i)
+  {
+	vec3 lightDir = normalize(uLightPosition[i] - vFragPos);
 	float specIntensity = 0.5f;
 	vec3 viewDir = normalize(uCameraPosition - vFragPos);
 	vec3 reflectDir = reflect(-lightDir, normalize(vNormal));
 
 	float spec = pow(max(dot(viewDir, reflectDir), 0.f), 32);
 
-	return specIntensity * spec * uLightColor;
+	totalSpec += (specIntensity * spec * uLightColor[i]);  
+  }
+  return totalSpec;
 }
 
 void main()
