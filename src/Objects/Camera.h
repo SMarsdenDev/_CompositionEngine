@@ -17,6 +17,7 @@ namespace _CompositionEngine
 		virtual void OnUpdate(ApplicationTickEvent& e) override;
 		virtual void OnRender(ApplicationRenderEvent& e) override;
 		virtual void OnEvent(Event& e) override;
+		virtual void Serialize(std::ofstream& file);
 
 		//! Getters
 		inline glm::vec3 Back() const   { return m_Back; }
@@ -56,6 +57,9 @@ namespace _CompositionEngine
         void Yaw(float degrees);
 
 	private:
+		void SerializeMat4(glm::mat4 mat, std::ofstream& file);
+		void SerializeVec3(glm::vec3 vec, std::ofstream& file);
+
         bool m_ViewDirty = true, m_PerspDirty = true;
 
         glm::mat4 m_View, m_Persp;

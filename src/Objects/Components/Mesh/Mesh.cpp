@@ -46,6 +46,15 @@ namespace _CompositionEngine
 
 		return m_Model;
 	}
+	void Mesh::Serialize(std::ofstream& file)
+	{
+		file << "Component | Mesh\n";
+
+    file << "V: " << m_VBO.GetVertexCount() << "\n";
+    file << "T: " << m_IBO.Size()/3 << "\n";
+    m_VBO.Serialize(file);
+    m_IBO.Serialize(file);
+	}
 	void Mesh::SetPosition(glm::vec3 pos)
 	{
       m_WPosition = pos;

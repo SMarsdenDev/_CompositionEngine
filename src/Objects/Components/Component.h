@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <fstream>
 
 namespace _CompositionEngine
 {
@@ -25,6 +26,8 @@ namespace _CompositionEngine
 		virtual void OnUpdate(ApplicationTickEvent& te) = 0;
 		virtual void OnRender(ApplicationRenderEvent& re) = 0;
 		virtual void OnEvent(Event& e) = 0;
+
+		virtual void Serialize(std::ofstream& file) = 0;
 
 		inline Object* GetParent() const { return m_Parent; }
 		inline void SetParent(Object* parent) { if(m_Parent != parent) { m_Parent = parent; }}

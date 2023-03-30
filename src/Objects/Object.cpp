@@ -1,3 +1,5 @@
+#include <fstream>
+#include <filesystem>
 #include "Object.h"
 #include "Components/Component.h"
 #include "Components/Mesh/Mesh.h"
@@ -150,6 +152,28 @@ namespace _CompositionEngine
     {
       mat->SetObjectColor(color);
     }
+  }
+
+  void Object::Serialize(std::ofstream& file)
+  {
+    if(!file.is_open())
+    {
+      LOG_ERROR("[{0}] [{1}] File not open when used",__LINE__, __FILE__);
+      return;
+    }
+
+    file << "Object | " << m_Name.c_str() << "\n";
+
+    file << "{\n";
+
+    //! for each Component: Component->Serialize(file);
+    for(Component* comp : m_Components)
+    {
+      file << "\n";
+      comp->Serialize(file);
+    }
+
+    file << "}\n";
   }
 }
 

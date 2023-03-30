@@ -34,6 +34,8 @@ namespace _CompositionEngine
       void SetRotation(glm::vec3 scale);
       void SetObjectColor(glm::vec3 col);
 
+      void Serialize(std::ofstream& file);
+
 	private:
 		std::string m_Name;
 		std::vector<Component*> m_Components;

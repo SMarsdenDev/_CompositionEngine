@@ -34,6 +34,9 @@ namespace _CompositionEngine
         inline LightData* GetSceneLightData() const { return m_Scene->GetLightData(); }
 		inline Camera* GetSceneCamera() const { return m_Scene->GetCamera(); }
 
+        inline void AddLightToScene(glm::vec3 pos, glm::vec3 col) { m_Scene->AddLight(pos,col); }
+        inline void SerializeScene(const char* filepath) { m_Scene->Serialize(filepath); }
+	    inline int GetSceneLightCount() const { return (int)GetSceneLightData()->m_Position.size(); }
 	private:
 		bool OnKey(KeyEvent& e);
 		bool OnMouseButton(MouseButtonEvent& e);

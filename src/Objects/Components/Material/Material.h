@@ -31,6 +31,7 @@ namespace _CompositionEngine
 		virtual void OnUpdate(ApplicationTickEvent& te) override;
 		virtual void OnRender(ApplicationRenderEvent& re) override;
         virtual void OnEvent(Event& e) override;
+        virtual void Serialize(std::ofstream& file) override;
 
         //! Uniform Getters
         glm::vec3 GetObjectColor() const;

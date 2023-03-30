@@ -1,4 +1,5 @@
 #include "../../../stdafx.h"
+#include <fstream>
 #include "glad/glad.h"
 #include "ArrayBuffer.h"
 
@@ -51,7 +52,7 @@ namespace _CompositionEngine
 		GL_CALL(glBindVertexArray(ID()));
 	}
 	VertexBuffer::VertexBuffer(float* verts, unsigned size)
-		: ArrayBuffer(GL_ARRAY_BUFFER)
+		: ArrayBuffer(GL_ARRAY_BUFFER), m_VertexCount(size)
 	{
 		Bind();
 		for (unsigned i = 0; i < size / sizeof(unsigned); ++i)
@@ -60,8 +61,8 @@ namespace _CompositionEngine
 	}
 	void VertexBuffer::AssignLayout(VertexBufferLayout& layout)
 	{
-		size_t numAttributes = layout.m_Offsets.size();
-		for (size_t i = 0; i < numAttributes; ++i)
+		short unsigned numAttributes = (short unsigned)layout.m_Offsets.size();
+		for (short unsigned i = 0; i < numAttributes; ++i)
 		{
 			GLint size = layout.m_Offsets[i] / GetSizeFromType(layout.m_Types[i]);
 			GL_CALL(glVertexAttribPointer(i, layout.m_AttribCounts[i], GetGLTypeFromEnumType(layout.m_Types[i]), GL_FALSE, 
@@ -72,6 +73,14 @@ namespace _CompositionEngine
 	void VertexBuffer::Bind()
 	{
 		GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, ID()));
+	}
+	void VertexBuffer::Serialize(std::ofstream& file)
+	{
+		for(float val : m_Vertices)
+		{
+			file << val << " ";
+		}
+		file << "\n";
 	}
 	void VertexBufferLayout::AddAttribute(unsigned count, BufferLayoutType type)
 	{
@@ -92,5 +101,13 @@ namespace _CompositionEngine
 	void IndexBuffer::Bind()
 	{
 		GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID));
+	}
+	void IndexBuffer::Serialize(std::ofstream& file)
+	{
+		for(unsigned index : m_Indices)
+		{
+			file << index << " ";
+		}
+		file << "\n";
 	}
 }

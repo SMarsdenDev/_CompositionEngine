@@ -24,6 +24,8 @@ namespace _CompositionEngine
 		virtual void OnRender(ApplicationRenderEvent& re) override;
 		virtual void OnEvent(Event& e) override;
 
+		virtual void Serialize(std::ofstream& file) override;
+
         glm::mat4 GetTransform(); 
         inline glm::vec3 GetWPosition() const { return m_WPosition; }
         inline glm::vec3 GetScale()     const {     return m_Scale; } 

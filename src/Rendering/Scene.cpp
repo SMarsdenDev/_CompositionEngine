@@ -1,3 +1,4 @@
+#include <fstream>
 #include "Scene.h"
 #include "../Log.h"
 #include "../Objects/Camera.h"
@@ -32,6 +33,33 @@ namespace _CompositionEngine
   		delete m_RenderCamera;
   		m_RenderCamera = cam;
   	}
+  }
+  void Scene::Serialize(const char* filepath) const
+  {
+    std::ofstream file(filepath, std::ios::out);
+    //! Serialize Objects
+
+    for(Object* obj : m_Objects)
+    {
+      obj->Serialize(file);
+    }
+
+
+    //! Serialize Lights
+    size_t numLights = m_LightData->m_Position.size();
+    for(size_t i = 0; i < numLights; ++i)
+    {
+      file << "Light\n" <<"{\n";
+
+      file << m_LightData->m_Position[i].x << " " << m_LightData->m_Position[i].y << " " << m_LightData->m_Position[i].z << "\n";
+      file << m_LightData->m_Color[i].r << " " << m_LightData->m_Color[i].g << " " << m_LightData->m_Color[i].b << "\n";
+      file << m_LightData->m_AmbientIntensity;
+
+      file << "\n}\n";
+    }
+
+    //! Serialize Camera
+    m_RenderCamera->Serialize(file);
   }
   void Scene::UploadLightData(Object* obj)
   {

@@ -35,6 +35,8 @@ namespace _CompositionEngine
       inline LightData* GetLightData() { return m_LightData; }
       inline Camera* GetCamera() { return m_RenderCamera; }
 
+      void Serialize(const char* filepath) const;
+
     protected:
       void UploadLightData(Object* obj);
     private:

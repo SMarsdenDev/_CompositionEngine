@@ -22,7 +22,7 @@ namespace _CompositionEngine
   	}
     //! Enable Depth Rendering
     glEnable(GL_DEPTH_TEST);
-
+    glfwSetWindowPos(m_Window, 0, 0);
     glfwSetWindowUserPointer(m_Window, &m_Data);
   	InitializeCallbacks();
   }

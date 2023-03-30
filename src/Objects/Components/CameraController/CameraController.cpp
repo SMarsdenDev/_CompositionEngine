@@ -37,13 +37,18 @@ namespace _CompositionEngine
 
 	void CameraController::OnEvent(Event& e)
 	{
-      EventDispatcher disp(e);
-      if(e.GetCategoryFlags() & EventCategoryKeyboard)
-      {
-        disp.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(OnKeyPressedEvent));
-	      disp.Dispatch<KeyReleasedEvent>(BIND_EVENT_FN(OnKeyReleasedEvent));  	
-      }
+    EventDispatcher disp(e);
+    if(e.GetCategoryFlags() & EventCategoryKeyboard)
+    {
+      disp.Dispatch<KeyPressedEvent>(BIND_EVENT_FN(OnKeyPressedEvent));
+	    disp.Dispatch<KeyReleasedEvent>(BIND_EVENT_FN(OnKeyReleasedEvent));  	
     }
+  }
+  void CameraController::Serialize(std::ofstream& file)
+  {
+    file << "Component | CameraController\n";
+    file << "Spd: " << m_CameraSpeed << " RotSpd: " << m_RotationSpeed << "\n";
+  }
 
 	bool CameraController::OnKeyPressedEvent(KeyPressedEvent& ke)
 	{

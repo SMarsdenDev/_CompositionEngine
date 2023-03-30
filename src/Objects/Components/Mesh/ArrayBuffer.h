@@ -51,10 +51,15 @@ namespace _CompositionEngine
 		VertexBuffer(float* verts, unsigned count);
 		void AssignLayout(VertexBufferLayout& layout);
 
+		inline unsigned GetVertexCount() const { return m_VertexCount; }
+
 		virtual void Bind();
+
+		void Serialize(std::ofstream& file);
 
 	private:
 		std::vector<float> m_Vertices;
+		unsigned m_VertexCount;
 	};
 
 	class IndexBuffer : public ArrayBuffer
@@ -66,6 +71,8 @@ namespace _CompositionEngine
 		inline const unsigned Size() const { return unsigned(m_Indices.size()); }
 
 		void Bind();
+
+		void Serialize(std::ofstream& file);
 
 	private:
 		GLuint m_ID;

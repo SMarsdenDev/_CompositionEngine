@@ -15,7 +15,7 @@ namespace _CompositionEngine
 
   Application::Application(EventCallbackFn fn)
   	: m_IsRunning(true), 
-  	  m_Window(new Window("TEST WINDOW", 600, 600, fn)),
+  	  m_Window(new Window("TEST WINDOW", 960, 540, fn)),
       m_Scene(new RenderTestScene())
   {
     m_Window->SetClearColor(glm::vec3(0.1f, 0.01f, 0.07f));

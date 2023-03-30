@@ -46,6 +46,18 @@ namespace _CompositionEngine
   {
 
   }
+  void Camera::Serialize(std::ofstream& file) 
+  {
+    file << "Camera\n";
+    file << "{\n";
+    SerializeMat4(View(), file);
+    SerializeMat4(Persp(), file);
+    SerializeVec3(Back(), file);
+    SerializeVec3(Right(), file);
+    SerializeVec3(Up(), file);
+    SerializeVec3(Eye(), file);
+    file << "}\n";
+  }
 
   void Camera::MoveForward(float distance)
   {
@@ -96,5 +108,25 @@ namespace _CompositionEngine
     glm::vec3 rVec = Right();
     Right(glm::vec3(rotate * glm::vec4(rVec.x, rVec.y, rVec.z, 1.f)));
     Back(glm::vec3(rotate * glm::vec4(backVec.x, backVec.y, backVec.z, 1.f)));
+  }
+  void Camera::SerializeMat4(glm::mat4 mat, std::ofstream& file)
+  {
+    file << 
+      mat[0][0] << " " << 
+      mat[0][1] << " " <<
+      mat[0][2] << " " <<
+      mat[1][0] << " " << 
+      mat[1][1] << " " <<
+      mat[1][2] << " " <<
+      mat[2][0] << " " << 
+      mat[2][1] << " " <<
+      mat[2][2] << " \n";
+  }
+  void Camera::SerializeVec3(glm::vec3 vec, std::ofstream& file)
+  {
+    file <<
+      vec[0] << " " <<
+      vec[1] << " " <<
+      vec[2] << " \n";
   }
 }
